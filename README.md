@@ -13,13 +13,12 @@ Pour se déplacer
 Voici des exemples de decor et de mecanique que nous souhaitons faire dans notre jeu/
 https://www.youtube.com/watch?v=V1CntfBVwS8
   https://www.google.com/imgres?imgurl=https%3A%2F%2Fhabrastorage.org%2Fwebt%2Flz%2Fkh%2Fq4%2Flzkhq4sblsrxlqu7zmn5nuekwps.png&imgrefurl=https%3A%2F%2Fweekly-geekly-es.imtqy.com%2Farticles%2Ffr477544%2Findex.html&tbnid=dz7RYYyLRHtvrM&vet=10CLkBEDMotgFqFwoTCMiB37et2fQCFQAAAAAdAAAAABAD..i&docid=Q8yTpTsQYfeLjM&w=520&h=292&itg=1&q=DECOR%20POUR%20JEU%20EN%202d&hl=fr&client=firefox-b-d&ved=0CLkBEDMotgFqFwoTCMiB37et2fQCFQAAAAAdAAAAABAD#imgrc=dz7RYYyLRHtvrM&imgdii=xg98D8AAuMzDzM
-  https://www.google.com/imgres?imgurl=https%3A%2F%2Fhabrastorage.org%2Fwebt%2Flz%2Fkh%2Fq4%2Flzkhq4sblsrxlqu7zmn5nuekwps.png&imgrefurl=https%3A%2F%2Fweekly-geekly-es.imtqy.com%2Farticles%2Ffr477544%2Findex.html&tbnid=dz7RYYyLRHtvrM&vet=10CLkBEDMotgFqFwoTCMiB37et2fQCFQAAAAAdAAAAABAD..i&docid=Q8yTpTsQYfeLjM&w=520&h=292&itg=1&q=DECOR%20POUR%20JEU%20EN%202d&hl=fr&client=firefox-b-d&ved=0CLkBEDMotgFqFwoTCMiB37et2fQCFQAAAAAdAAAAABAD#imgrc=dz7RYYyLRHtvrM&imgdii=xg98D8AAuMzDzM
-
 
 
 
 
 Tiled : https://www.mapeditor.org/
+Aseprite: https://www.aseprite.org/
 
 PROJET 2 « MINI JEU » Un regroupement de jeu rassembalant des jeux de voitures (course), de flipper, de bowling, 8 ball, et d’autres mini jeu en 2D et 3D
 
