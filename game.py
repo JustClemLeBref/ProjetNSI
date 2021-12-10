@@ -17,12 +17,12 @@ clock = pygame.time.Clock()
 
 #titre et background et icon
 pygame.display.set_caption("Kirby") 
-icon = pygame.image.load(r'assert\icon.jpg')
+icon = pygame.image.load(r'\assert\icon.jpg')
 pygame.display.set_icon(icon)
-background = pygame.image.load(r"assert\bg.png")
+background = pygame.image.load(r"\assert\bg.png")
 
 #load personnage
-character = pygame.image.load(r'assert\icon.jpg')
+character = pygame.image.load(r'\assert\icon.jpg')
 character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
