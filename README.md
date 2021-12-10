@@ -10,6 +10,14 @@ C’est un Jeu qui reprend le concept du fameux jeu « Kirby » de HAL Studio (d
 Le parcours seras un parcours avec différents obstacle par exemple: il y auras des piques , des trous d'eau , et des changements de niveau/hauteur 
 Pour se déplacer 
 
+Voici des exemples de decor et de mecanique que nous souhaitons faire dans notre jeu/
+https://www.youtube.com/watch?v=V1CntfBVwS8
+
+
+
+
+
+
 PROJET 2 « MINI JEU » Un regroupement de jeu rassembalant des jeux de voitures (course), de flipper, de bowling, 8 ball, et d’autres mini jeu en 2D et 3D
 
 EN COURS DE REFLEXION
