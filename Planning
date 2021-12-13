@@ -13,16 +13,14 @@
   - Plus de détails sur le Planning
  
  ## Semaine 3:
-  - Début de la création d'un niveau ( fond, couleurs, placement...)
   - Création du Logo 
-  - Déplacement du personnage à l'aide de touche
   - Finalisations des actions que pourrait faire le personnage
+  - création de la premiere fenetre du jeu 
   
   ## Semaine 4:
-    - Graphisme de l'interface 
-    - Création de l'écran d'acceuil 
-    - Création de bouton (bouton "JOUER")
-    
+   - Début de la création d'un niveau ( fond, couleurs, placement...)
+   - Déplacement du personnage à l'aide de touche 
+  
   ## Semaine 5:
   - Graphisme du niveau
   - développment du niveau
@@ -33,3 +31,24 @@
     
  ## Semaine 7:
    - Interprétation des collisions 
+
+ ## Semaine 8:
+   - developement de la mort du personnage(si il touches piques ou tombe dans un trou il meurt)
+   - relancement du jeu une fois mort
+  
+ ## Semaine 9:
+   - Graphisme de l'interface 
+   - Création de l'écran d'acceuil 
+   - Création de bouton (bouton "JOUER")
+ 
+ 
+ ## Semaine 10: 
+   -premier test du jeu
+   - fixation des premier bug
+
+## Semaine 11 
+  - effet sonore 
+  - amelioration du jeu
+
+## Semaine 12
+ -
