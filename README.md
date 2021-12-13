@@ -1,6 +1,6 @@
 # Projet NSI
 ## PROJET DE NSI 2021/2022 
-### Clément ALESSANDRIOUME
+### Clément ALEXANDRE
 ### Edward CARTER 
 ### Maximilien GALLAIS
 
