@@ -1,5 +1,7 @@
 # ProjetNSI
-## PROJET DE NSI 2021/2022 Clément ALEXANDRE Edward CARTER Maximilien GALLAIS
+### PROJET DE NSI 2021/2022 Clément ALEXANDRE 
+### Edward CARTER 
+### Maximilien GALLAIS
 
 # PROJET « BLOOBEY»
 
