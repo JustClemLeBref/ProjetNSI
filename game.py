@@ -2,12 +2,12 @@
 import pygame 
 import keyboard  
 import sys
-
+import time
 #creer une fenetre 
 pygame.init() 
 
 #dimension de la fenetre
-screen_width = 1660
+screen_width = 2000
 screen_height = 1000
 screen = pygame.display.set_mode((screen_width, screen_height)) 
 
@@ -17,50 +17,84 @@ clock = pygame.time.Clock()
 
 #titre et background et icon
 pygame.display.set_caption("Kirby") 
-icon = pygame.image.load(r'\assert\icon.jpg')
+icon = pygame.image.load('assert\Icon\icon.jpg')
 pygame.display.set_icon(icon)
-background = pygame.image.load(r"\assert\bg.png")
+background = pygame.image.load("assert\Background\Background.png")
 
 #load personnage
-character = pygame.image.load(r'\assert\icon.jpg')
-character_size = character.get_rect().size
+character = pygame.image.load('assert\Icon\icon.jpg')
+character_size = (225,190)
 character_width = character_size[0]
 character_height = character_size[1]
+character = pygame.transform.scale(character, (character_width, character_height))
 character_x_pos = 0
-character_y_pos = 0
+character_y_pos = 720
+plaform=(character_y_pos,0)
+
+#Jumping variables
+isJump = False
+jumpCount = 10
+vel = 100
+x = 50
+y = 50
+width = 40
+height = 60
+
 #variable
 actif = True 
 
 #la loop
-while actif:  # creer _une loop
+while actif:  
+
     screen.blit(background,(0,0))
     screen.blit(character, (character_x_pos, character_y_pos))
-    pygame.display.update()
+    
     for event in pygame.event.get(): #prends chaque evenement de pygame 
         if event.type == pygame.QUIT: #je compars levenement pris
-            pygame.quit()
             actif = False
+            pygame.quit()
+            
     try:  # used try so that if user pressed other than the given key error will not be shown
         if keyboard.is_pressed('ESC'):  # si la touche 'q' est appuier 
             print('You Pressed ECHAP Key!') 
             pygame.quit()
             actif = False
+            
         if keyboard.is_pressed('d'):  # si la touche 'q' est appuier 
-            if character_x_pos!=760:
+            if character_x_pos!=10000:
                 character_x_pos=character_x_pos+10
+            
             print(character_x_pos)
+            
+            
         if keyboard.is_pressed('q'):  # si la touche 'q' est appuier 
             if character_x_pos!=-10:
                 character_x_pos=character_x_pos-10
+            
             print(character_x_pos)
-        if keyboard.is_pressed('s'):  # si la touche 'q' est appuier 
-            if character_y_pos!=60:
-                character_y_pos=character_y_pos+10
-            print(character_y_pos)
-        if keyboard.is_pressed('z'):  # si la touche 'q' est appuier 
-            if character_y_pos!=120:
-                character_y_pos=character_y_pos-10
-            print(character_y_pos)
+            
     except:
-        break  # if user pressed a key other than the given key the loop will break
+        break  # if user pressed a kecdy other than the given key the loop will break
+        
+    if not(isJump): 
+        if keyboard.is_pressed('z'):  # si la touche 'q' est appuier 
+            
+            if y > vel:  
+                y -= vel
+            
+            if y < 500 - vel:
+                y += vel
+            isJump = True
     
+    else:
+        if jumpCount >= -10:
+            y -= (jumpCount * abs(jumpCount)) * 0.5
+            jumpCount -= 1
+        else: 
+            jumpCount = 10
+            isJump = False
+            
+    
+    pygame.display.update()
+    
+
