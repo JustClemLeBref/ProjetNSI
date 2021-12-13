@@ -52,7 +52,7 @@ Aseprite: https://www.aseprite.org/
   - Faire que l'écran suive le personnage
   
   ## Semaine 6:
-    - SUITE de la création du niveau : Faire le premier plan du niveau(bloc) 
+   - SUITE de la création du niveau : Faire le premier plan du niveau(bloc) 
     
  ## Semaine 7:
    - Interprétation des collisions
