@@ -24,9 +24,6 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
-
-Bon Plan : https://www.ma-peluche.fr/uncategorized/peluche-kawaii-kirby/peluche-kirby-a-grosse-bouche-ouverte?gclid=CjwKCAiA-9uNBhBTEiwAN3IlNFnh_cuera8fUVW2E5I8IZf_0x5M2Vexdcjd13DOCWHDq3jyG_kYlRoC6kIQAvD_BwE
-
 ### Clément=C Edward=E Maximilien=M
 
 # Planning pour notre jeu de NSI
@@ -75,32 +72,32 @@ Bon Plan : https://www.ma-peluche.fr/uncategorized/peluche-kawaii-kirby/peluche-
  
  
  ## Semaine 10: 
-   - premier test du jeu
-   - fixation des premier bug
-   - Premier ajout des monstres
-   - Possibles ajouts de soins du personnage
+   - premier test du jeu                E/C/M
+   - fixation des premier bug           E/C/M
+   - Premier ajout des monstres         E
+   - Possibles ajouts de soins du personnage    M/C
 
 ## Semaine 11 
-  - effet sonore 
-  - Gestion des FPS
-  - Création des monstres, gestion des dégats
+  - effet sonore     M
+  - Gestion des FPS   C
+  - Création des monstres, gestion des dégats   E
   
 
 ## Semaine 12
- - gestion des animations du niveau
- - gestion des animations du personnage
- - gestion des animations des monstres
+ - gestion des animations du niveau    E
+ - gestion des animations du personnage   M
+ - gestion des animations des monstres   C
  
  ## Semaine 13 
-  - Débeuguage
-  -Ajout d'un score ?
+  - Débeuguage    E/C/M
+  -Ajout d'un score ?   E/C/M
   
   ## Semaine 14 
-  - Finalisations du jeu 
+  - Finalisations du jeu    E/C/M
   
   ## Semaine 15
-  - Test du jeu par les autres
-  - Présentation à l'oral du jeu  
+  - Test du jeu par les autres   
+  - Présentation à l'oral du jeu     E/C/M
 
 
 
