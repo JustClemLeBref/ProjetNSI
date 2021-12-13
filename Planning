@@ -44,11 +44,14 @@
  
  
  ## Semaine 10: 
-   -premier test du jeu
+   - premier test du jeu
    - fixation des premier bug
+   - Premier ajout des monstres
+   - Possibles ajouts de soins du personnage
 
 ## Semaine 11 
   - effet sonore 
+  - Gestion des FPS
   - Création des monstres, gestion des dégats
   
 
@@ -59,9 +62,10 @@
  
  ## Semaine 13 
   - Débeuguage
+  -Ajout d'un score ?
   
   ## Semaine 14 
-  - Finalisations du jeu
+  - Finalisations du jeu 
   
   ## Semaine 15
   - Test du jeu par les autres
