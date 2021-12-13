@@ -23,8 +23,8 @@ Aseprite: https://www.aseprite.org/
 
 
 
-#Planning pour notre jeu de NSI
-
+# Planning pour notre jeu de NSI
+ 
 ## Semaine 1 :
   - Inventer un jeu, le nom, le but, le type de jeu, la vue...
   - Ecrire le README pour présenter le projet brèvement.
