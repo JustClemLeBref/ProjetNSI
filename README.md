@@ -19,9 +19,9 @@ C’est un Jeu qui reprend le concept du fameux jeu « Kirby » de HAL Studio (d
 - Prendre leur pouvoir (voler, cracher du feu, de la glace, de l'eau, et peut etre d'autre)
                    
 
-Pour le décor de notre jeu BLOOBEY nous avons  décidé de faire un fond bleu avec des  nuages et des arbres.
-Le parcours seras un parcours avec différents obstacle par exemple: il y auras des piques , des trous d'eau , et des changements de niveau/hauteur 
-Pour se déplacer 
+Pour le décor de notre jeu BLOOBEY nous avons décidé de faire un fond bleu avec des nuages et des arbres.
+Le parcours sera un parcours avec différents obstacles par exemple: il y aura des piques, des trous d'eaux, et des changements de niveau/hauteur 
+pour se déplacer.
 
 Voici des exemples de decor et de mecanique que nous souhaitons faire dans notre jeu/
 https://www.youtube.com/watch?v=V1CntfBVwS8
