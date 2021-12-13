@@ -24,6 +24,9 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
+
+Bon Plan : https://www.ma-peluche.fr/uncategorized/peluche-kawaii-kirby/peluche-kirby-a-grosse-bouche-ouverte?gclid=CjwKCAiA-9uNBhBTEiwAN3IlNFnh_cuera8fUVW2E5I8IZf_0x5M2Vexdcjd13DOCWHDq3jyG_kYlRoC6kIQAvD_BwE
+
 ### Clément=C Edward=E Maximilien=M
 
 # Planning pour notre jeu de NSI
