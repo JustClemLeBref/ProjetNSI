@@ -6,22 +6,12 @@
 
 # PROJET « BLOOBEY»
 
-C’est un Jeu qui reprend le concept du fameux jeu « Kirby » de HAL Studio (de Nintendo). C’est un jeu à 1 joueur. Le principe est simple : Le joueur contrôle un petit slime vert sur un plateau 2D. Pour l'instant le jeu consisterais en 1 niveau avec de simples obstaces. Cependant le but serait de pouvoir ajouter des ennemis et des coffres. Il a la faculté de ramper, sauter, s'accroupir ( à voir) et surtout de pouvoir avaler ses ennemis et d’obtenir leur pouvoir (ex : il avale un ennemi qui crache du feu, Bloobey change d’apparence et peut désormais cracher du feu). Il peut perdre son pouvoir en se prenant des dégâts, et il ne peut pas avaler un autre pouvoir tant qu’il a un pouvoir actif (car la touche pour avaler est la même que pour attaquer). Le but de jeu est de faire avancer Bloopey jusqu’au bout du niveau, en évitant les obstacles, tuant les ennemis (ou pas), et récupérer des coffres. Ces coffres peuvent contenir de la nourriture qui soigne Bloobey, ou alors des pouvoirs, ou bien des objets à collecter à travers les niveaux. Bloobey a une vie limitée, il perd des points de vie s’il se fait toucher par une attaque ennemi (attaque toutes les 3 secondes), s’il se fait toucher par un obstacle (pic, lave, canons…) ou s’il tombe dans le vide. A sa mort, Bloobey doit recommencer le niveau. En terminant le niveau, un nouveau niveau se débloque, ou la fin du jeu. Le but ultime de Bloobey est de récupérer ses frêres qui ont été volé par son ennemi. Dans les niveaux, la vue est de face, troisième personne, et la vue reste toujours centré sur bloobey, donc le niveau se déplace en fonction de la position de bloobey. On pourra ajouter autant de niveau que voulu. Les touches seraient : Flèche droite, flèche gauche (avancer reculer), Flèche Haut (sauter), Flèche Bas (s’accroupir et avaler), et ESPACE (aspirer + attaque).   
-
-## Principale tache du jeu 
-- Marcher, reculer, s'arrêter
-- Sauter ( 1 fois, pas de double saut ou de saut à l'infini)
-- Prendre des dégats et mourir (barre de vie)
-- attaquer 
-- Manger pou récupérer de la vie
-- Rentrer dans une porte pour fini le niveau
-- Avaler des ennemis
-- Prendre leur pouvoir (voler, cracher du feu, de la glace, de l'eau, et peut etre d'autre)
+C’est un Jeu qui reprend le concept du fameux jeu « Kirby » de HAL Studio (de Nintendo). C’est un jeu à 1 joueur. Le principe est simple : Le joueur contrôle un petit slime vert sur un plateau 2D. Pour l'instant le jeu consisterais en 1 niveau avec de simples obstaces. Cependant le but serait de pouvoir ajouter des ennemis et des coffres. Il a la faculté de ramper, sauter, s'accroupir ( à voir) et surtout de pouvoir avaler ses ennemis et d’obtenir leur pouvoir (ex : il avale un ennemi qui crache du feu, Bloobey change d’apparence et peut désormais cracher du feu). Il peut perdre son pouvoir en se prenant des dégâts, et il ne peut pas avaler un autre pouvoir tant qu’il a un pouvoir actif (car la touche pour avaler est la même que pour attaquer). Le but de jeu est de faire avancer Bloopey jusqu’au bout du niveau, en évitant les obstacles, tuant les ennemis (ou pas), et récupérer des coffres. Ces coffres peuvent contenir de la nourriture qui soigne Bloobey, ou alors des pouvoirs, ou bien des objets à collecter à travers les niveaux. Bloobey a une vie limitée, il perd des points de vie s’il se fait toucher par une attaque ennemi (attaque toutes les 3 secondes), s’il se fait toucher par un obstacle (pic, lave, canons…) ou s’il tombe dans le vide. A sa mort, Bloobey doit recommencer le niveau. En terminant le niveau, un nouveau niveau se débloque, ou la fin du jeu. Le but ultime de Bloobey est de récupérer ses frêres qui ont été volé par son ennemi. Dans les niveaux, la vue est de face, troisième personne, et la vue reste toujours centré sur bloobey, donc le niveau se déplace en fonction de la position de bloobey. On pourra ajouter autant de niveau que voulu. Les touches seraient : Flèche droite, flèche gauche (avancer reculer), Flèche Haut (sauter), Flèche Bas (s’accroupir et avaler), et ESPACE (aspirer + attaque).                
                    
 
-Pour le décor de notre jeu BLOOBEY nous avons décidé de faire un fond bleu avec des nuages et des arbres.
-Le parcours sera un parcours avec différents obstacles par exemple: il y aura des piques, des trous d'eaux, et des changements de niveau/hauteur 
-pour se déplacer.
+Pour le décor de notre jeu BLOOBEY nous avons  décidé de faire un fond bleu avec des  nuages et des arbres.
+Le parcours seras un parcours avec différents obstacle par exemple: il y auras des piques , des trous d'eau , et des changements de niveau/hauteur 
+Pour se déplacer 
 
 Voici des exemples de decor et de mecanique que nous souhaitons faire dans notre jeu/
 https://www.youtube.com/watch?v=V1CntfBVwS8
@@ -34,51 +24,51 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
-
+Clément=C Edward=E(BG) Maximilien=M
 
 # Planning pour notre jeu de NSI
  
 ## Semaine 1 :
-  - Inventer un jeu, le nom, le but, le type de jeu, la vue...
-  - Ecrire le README pour présenter le projet brèvement.
-  - Création d'un planning 
+  - Inventer un jeu, le nom, le but, le type de jeu, la vue... C/M/E
+  - Ecrire le README pour présenter le projet brèvement.    C
+  - Création d'un planning      C/M
   
  ## Semaine 2:
-  - Appronfondissement des idées du jeu
-  - Finalisations des détails du jeu sur le README
-  - Premier développement du code, les bases
-  - Recherche de logiciel(s) permettant le développement du jeu ( ex: AsePrite pour les graphismes)
-  - Plus de détails sur le Planning
+  - Appronfondissement des idées du jeu            C/M/E
+  - Finalisations des détails du jeu sur le README       C/M
+  - Premier développement du code, les bases         E
+  - Recherche de logiciel(s) permettant le développement du jeu ( ex: AsePrite pour les graphismes)      C/E
+  - Plus de détails sur le Planning      M/C
  
  ## Semaine 3:
-  - Création du Logo 
-  - Finalisations des actions que pourrait faire le personnage
-  - création de la premiere fenetre du jeu 
+  - Création du Logo                 C
+  - Finalisations des actions que pourrait faire le personnage      C
+  - création de la premiere fenetre du jeu       E
   
   ## Semaine 4:
-   - Début de la création d'un niveau ( fond, couleurs, placement...)
-   - Déplacement du personnage à l'aide de touche 
+   - Début de la création d'un niveau ( fond, couleurs, placement...)       M/C
+   - Déplacement du personnage à l'aide de touche            E
   
   ## Semaine 5:
-  - Graphisme du niveau
-  - développment du niveau à l'aide de Tiled 
-  - Faire que l'écran suive le personnage
+  - Graphisme du niveau             M
+  - développment du niveau à l'aide de Tiled    C
+  - Faire que l'écran suive le personnage        E
   
   ## Semaine 6:
-   - SUITE de la création du niveau : Faire le premier plan du niveau(bloc) 
+   - SUITE de la création du niveau : Faire le premier plan du niveau(bloc)       C/M/E
     
  ## Semaine 7:
-   - Interprétation des collisions
-   - Création des dégats et de la barre de vie
+   - Interprétation des collisions            E
+   - Création des dégats et de la barre de vie              C/M
 
  ## Semaine 8:
-   - developement de la mort du personnage(si il touches piques ou tombe dans un trou il meurt)
-   - relancement du jeu une fois mort
+   - developement de la mort du personnage(si il touches piques ou tombe dans un trou il meurt)      C/M
+   - relancement du jeu une fois mort                   E
   
  ## Semaine 9:
-   - Graphisme de l'interface 
-   - Création de l'écran d'acceuil 
-   - Création de bouton (bouton "JOUER")
+   - Graphisme de l'interface                   C
+   - Création de l'écran d'acceuil               M
+   - Création de bouton (bouton "JOUER")          E
  
  
  ## Semaine 10: 
