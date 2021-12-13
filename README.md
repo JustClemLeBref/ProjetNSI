@@ -24,7 +24,7 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
-Clément=C Edward=E(BG) Maximilien=M
+### Clément=C Edward=E Maximilien=M
 
 # Planning pour notre jeu de NSI
  
