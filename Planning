@@ -2,7 +2,34 @@
 
 ## Semaine 1 :
   - Inventer un jeu, le nom, le but, le type de jeu, la vue...
-  -Ecrire le README pour présenter le projet brèvement.
+  - Ecrire le README pour présenter le projet brèvement.
+  - Création d'un planning 
   
  ## Semaine 2:
-  - Appronfondissement 
+  - Appronfondissement des idées du jeu
+  - Finalisations des détails du jeu sur le README
+  - Premier développement du code, les bases
+  - Recherche de logiciel(s) permettant le développement du jeu ( ex: AsePrite pour les graphismes)
+  - Plus de détails sur le Planning
+ 
+ ## Semaine 3:
+  - Début de la création d'un niveau ( fond, couleurs, placement...)
+  - Création du Logo 
+  - Déplacement du personnage à l'aide de touche
+  - Finalisations des actions que pourrait faire le personnage
+  
+  ## Semaine 4:
+    - Graphisme de l'interface 
+    - Création de l'écran d'acceuil 
+    - Création de bouton (bouton "JOUER")
+    
+  ## Semaine 5:
+  - Graphisme du niveau
+  - développment du niveau
+  - Faire que l'écran suive le personnage
+  
+  ## Semaine 6:
+    - Faire le premier plan du niveau(bloc)
+    
+ ## Semaine 7:
+   - Interprétation des collisions 
