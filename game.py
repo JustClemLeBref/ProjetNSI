@@ -1,29 +1,26 @@
-#module import
+#importation des modules nécessaires
 import pygame 
 import keyboard  
 import sys
 import time
 
-#creer une fenetre 
+#création de la fenetre 
 pygame.init() 
 
 #dimension de la fenetre
-screen_width = 2000
-screen_height = 1000
-screen = pygame.display.set_mode((screen_width, screen_height)) 
-
-#ajoute en plus
+screen_resolution(2000,1000)
+screen = pygame.display.set_mode(screen_resolution) 
 pygame.display.flip() 
 clock = pygame.time.Clock()
 
-#titre et background et icon
+#titre, background et icon
 pygame.display.set_caption("Bloobey") 
 background = pygame.image.load('GRAPHISME\Background.png')
 icon = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 pygame.display.set_icon(icon)
 
 
-#load personnage
+#création du personnage
 character = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 character_size = (225,190)
 character_width = character_size[0]
@@ -33,7 +30,7 @@ character_x_pos = 0
 character_y_pos = 400
 plaform=(character_y_pos,0)
 
-#Jumping variables
+#Variables du saut(personnage)
 isJump = False
 jumpCount = 10
 vel = 100
@@ -41,15 +38,13 @@ x = 50
 y = 50
 width = 40
 height = 60
-
-#variable
 actif = True 
 
-#la loop
+#la boucle:
 while actif:  
 
     if not(isJump): 
-        if keyboard.is_pressed('z'):  # si la touche 'q' est appuier 
+        if keyboard.is_pressed('z'):  # si la touche 'z' est pressé
             
             if y > vel:  
                 y -= vel
@@ -68,13 +63,13 @@ while actif:
     screen.blit(background,(0,0))
     screen.blit(character, (character_x_pos, character_y_pos + y))
     
-    for event in pygame.event.get(): #prends chaque evenement de pygame 
-        if event.type == pygame.QUIT: #je compars levenement pris
+    for event in pygame.event.get(): #prend chaque evenement de pygame 
+        if event.type == pygame.QUIT: #je compare l'evenement pris
             actif = False
             pygame.quit()
             
     try:  # used try so that if user pressed other than the given key error will not be shown
-        if keyboard.is_pressed('ESC'):  # si la touche 'q' est appuier 
+        if keyboard.is_pressed('ESC'):  # si la touche 'z' est pressé 
             print('You Pressed ECHAP Key!') 
             pygame.quit()
             actif = False
