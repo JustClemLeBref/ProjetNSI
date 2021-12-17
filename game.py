@@ -68,27 +68,27 @@ while actif:
             actif = False
             pygame.quit()
             
-    try:  # used try so that if user pressed other than the given key error will not be shown
+    try:  # Si le joueur appuie sur une aitre touche, l'erreur ne sera pas affiché
         if keyboard.is_pressed('ESC'):  # si la touche 'z' est pressé 
             print('You Pressed ECHAP Key!') 
             pygame.quit()
             actif = False
             
-        if keyboard.is_pressed('d'):  # si la touche 'q' est appuier 
+        if keyboard.is_pressed('d'):  # si la touche 'z' est pressé 
             if character_x_pos!=10000:
                 character_x_pos=character_x_pos+10
             
             print(character_x_pos)
             
             
-        if keyboard.is_pressed('q'):  # si la touche 'q' est appuier 
+        if keyboard.is_pressed('q'):  # si la touche 'z' est pressé 
             if character_x_pos!=-10:
                 character_x_pos=character_x_pos-10
             
             print(character_x_pos)
             
     except:
-        break  # if user pressed a kecdy other than the given key the loop will break
+        break  # si le joueur appuie sur une autre touche que celle définie la boucle s'acheve
         
     
     pygame.display.update()
