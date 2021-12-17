@@ -97,8 +97,8 @@ while actif:
             print(character_x_pos)
             
     except:
-        break  # if user pressed a kecdy other than the given key the loop will break
-        
+        break  # si l'utilisateur appuie sur une autre touche, la boucle s'arrete
+         
     
     pygame.display.update()
     
