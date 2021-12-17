@@ -17,7 +17,7 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 
 #titre et background et icon
-pygame.display.set_caption("Kirby") 
+pygame.display.set_caption("Bloobey") 
 background = pygame.image.load('GRAPHISME\Background.png')
 icon = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 pygame.display.set_icon(icon)
