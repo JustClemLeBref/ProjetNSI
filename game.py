@@ -3,6 +3,7 @@ import pygame
 import keyboard  
 import sys
 import time
+
 #creer une fenetre 
 pygame.init() 
 
@@ -17,18 +18,19 @@ clock = pygame.time.Clock()
 
 #titre et background et icon
 pygame.display.set_caption("Kirby") 
-icon = pygame.image.load('assert\Icon\icon.jpg')
+background = pygame.image.load('GRAPHISME\Background.png')
+icon = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 pygame.display.set_icon(icon)
-background = pygame.image.load("assert\Background\Background.png")
+
 
 #load personnage
-character = pygame.image.load('assert\Icon\icon.jpg')
+character = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 character_size = (225,190)
 character_width = character_size[0]
 character_height = character_size[1]
 character = pygame.transform.scale(character, (character_width, character_height))
 character_x_pos = 0
-character_y_pos = 720
+character_y_pos = 400
 plaform=(character_y_pos,0)
 
 #Jumping variables
@@ -46,8 +48,25 @@ actif = True
 #la loop
 while actif:  
 
+    if not(isJump): 
+        if keyboard.is_pressed('z'):  # si la touche 'q' est appuier 
+            
+            if y > vel:  
+                y -= vel
+            
+            isJump = True
+    
+    else:
+        if jumpCount >= -10:
+            y -= (jumpCount * abs(jumpCount)) * 0.5
+            jumpCount -= 1
+        else: 
+            jumpCount = 10
+            isJump = False
+            
+
     screen.blit(background,(0,0))
-    screen.blit(character, (character_x_pos, character_y_pos))
+    screen.blit(character, (character_x_pos, character_y_pos + y))
     
     for event in pygame.event.get(): #prends chaque evenement de pygame 
         if event.type == pygame.QUIT: #je compars levenement pris
@@ -76,24 +95,6 @@ while actif:
     except:
         break  # if user pressed a kecdy other than the given key the loop will break
         
-    if not(isJump): 
-        if keyboard.is_pressed('z'):  # si la touche 'q' est appuier 
-            
-            if y > vel:  
-                y -= vel
-            
-            if y < 500 - vel:
-                y += vel
-            isJump = True
-    
-    else:
-        if jumpCount >= -10:
-            y -= (jumpCount * abs(jumpCount)) * 0.5
-            jumpCount -= 1
-        else: 
-            jumpCount = 10
-            isJump = False
-            
     
     pygame.display.update()
     
