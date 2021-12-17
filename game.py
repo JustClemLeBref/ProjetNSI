@@ -8,13 +8,17 @@ import time
 pygame.init() 
 
 #dimension de la fenetre
-screen_resolution(2000,1000)
-screen = pygame.display.set_mode(screen_resolution) 
+screen_width = 2000
+screen_height = 1000
+screen = pygame.display.set_mode((screen_width, screen_height)) 
+
+#ajoute en plus
 pygame.display.flip() 
 clock = pygame.time.Clock()
 
+
 #titre, background et icon
-pygame.display.set_caption("Bloobey") 
+pygame.display.set_caption("Kirby") 
 background = pygame.image.load('GRAPHISME\Background.png')
 icon = pygame.image.load('GRAPHISME\BLOOBEY-logo.png')
 pygame.display.set_icon(icon)
@@ -27,8 +31,9 @@ character_width = character_size[0]
 character_height = character_size[1]
 character = pygame.transform.scale(character, (character_width, character_height))
 character_x_pos = 0
-character_y_pos = 400
+character_y_pos = 600
 plaform=(character_y_pos,0)
+
 
 #Variables du saut(personnage)
 isJump = False
@@ -39,10 +44,14 @@ y = 50
 width = 40
 height = 60
 actif = True 
+SLIME_ACTIVE = character
 
 #la boucle:
 while actif:  
 
+    SLIME_copy = character.copy()
+    SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
+    
     if not(isJump): 
         if keyboard.is_pressed('z'):  # si la touche 'z' est pressé
             
@@ -61,34 +70,34 @@ while actif:
             
 
     screen.blit(background,(0,0))
-    screen.blit(character, (character_x_pos, character_y_pos + y))
+    screen.blit(SLIME_ACTIVE, (character_x_pos, character_y_pos + y))
     
-    for event in pygame.event.get(): #prend chaque evenement de pygame 
+    for event in pygame.event.get():  #prend chaque evenement de pygame 
         if event.type == pygame.QUIT: #je compare l'evenement pris
             actif = False
             pygame.quit()
             
-    try:  # Si le joueur appuie sur une aitre touche, l'erreur ne sera pas affiché
-        if keyboard.is_pressed('ESC'):  # si la touche 'z' est pressé 
+    try:  # used try so that if user pressed other than the given key error will not be shown
+        if keyboard.is_pressed('ESC'): # si la touche 'z' est pressé 
             print('You Pressed ECHAP Key!') 
             pygame.quit()
             actif = False
             
-        if keyboard.is_pressed('d'):  # si la touche 'z' est pressé 
+        if keyboard.is_pressed('d'):  # si la touche 'q' est appuier 
             if character_x_pos!=10000:
                 character_x_pos=character_x_pos+10
-            
+            SLIME_ACTIVE = SLIME_with_flip
             print(character_x_pos)
             
             
-        if keyboard.is_pressed('q'):  # si la touche 'z' est pressé 
+        if keyboard.is_pressed('q'):  # si la touche 'q' est appuier 
             if character_x_pos!=-10:
                 character_x_pos=character_x_pos-10
-            
+            SLIME_ACTIVE = character
             print(character_x_pos)
             
     except:
-        break  # si le joueur appuie sur une autre touche que celle définie la boucle s'acheve
+        break  # if user pressed a kecdy other than the given key the loop will break
         
     
     pygame.display.update()
