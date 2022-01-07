@@ -61,7 +61,7 @@ class BUTTON(pygame.sprite.Sprite):
                 if self.rect.collidepoint(event.pos):
                     active = False
                     print(active)
-                    pygame.quit()
+                    
     def update(self):
         self.rect.topleft = self.x, self.y
 
@@ -110,9 +110,10 @@ while active:
 
     event_list = pygame.event.get()
 
-    for event in pygame.event.get():
+    for event in event_list:
         if event.type == pygame.QUIT:
-            running = False
+            active = False
+            
 
     try:  # used try so that if user pressed other than the given key error will not be shown
         if keyboard.is_pressed('ESC'): # si la touche 'z' est pressé
@@ -188,4 +189,5 @@ while active:
     all_sprites.draw(screen)
     pygame.display.update()
     clock.tick(30)
+    
 pygame.quit()
