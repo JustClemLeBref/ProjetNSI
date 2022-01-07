@@ -29,13 +29,15 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 
 class game_character(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,image):
         super().__init__()
         self.description = "default"
-        self.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+        self.image = pygame.image.load(image)
+        self.size = (150,150)
+        self.transform = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
         self.x = 300
         self.y = 640
-        self.rect = self.image.get_rect(center = (self.x, self.y))
+        self.rect = self.image.get_rect()
         self.isJump = False
         self.jumpCount = 10
         self.vel = 100
@@ -45,10 +47,12 @@ class game_character(pygame.sprite.Sprite):
         self.rect.topleft = self.x, self.y
 
 class BUTTON(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,image):
         super().__init__()
         self.description = "default"
-        self.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+        self.image = pygame.image.load(image)
+        self.size = (150,150)
+        self.transform = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
         self.rect = self.image.get_rect()
         self.x = 300
         self.y = 640
@@ -64,33 +68,43 @@ class BUTTON(pygame.sprite.Sprite):
                     
     def update(self):
         self.rect.topleft = self.x, self.y
-
-SLIME_obj = game_character()
+        
+SLIME_obj_image = '.\\GRAPHISME\\bloobey-logo.png'
+SLIME_obj = game_character(SLIME_obj_image)
 SLIME_obj.description = "Slimey"
-SLIME_obj.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+SLIME_obj.size = (200,200)
+SLIME_obj.image = SLIME_obj.transform
+SLIME_obj.x = 30
+SLIME_obj.y = 750
 
-Ennemie_obj = game_character()
+Ennemie_obj_image = '.\\GRAPHISME\\monstre_test.png'
+Ennemie_obj = game_character(Ennemie_obj_image)
 Ennemie_obj.description = "Enemy"
-Ennemie_obj.image = pygame.image.load('.\\GRAPHISME\\monstre_test.png')
-Ennemie_obj.x = 30
-Ennemie_obj.y = 300
+Ennemie_obj.size = (150,150)
+Ennemie_obj.image = SLIME_obj.transform
+Ennemie_obj.x = 300
+Ennemie_obj.y = 500
+
 
 all_sprites = pygame.sprite.Group(Ennemie_obj, SLIME_obj)
 SLIMES = pygame.sprite.Group(SLIME_obj)
 
-YES =BUTTON()
-YES.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
-YES.x = 450
+image_YES = '.\\GRAPHISME\\YES.png'
+image_NO = '.\\GRAPHISME\\NO.png'
+
+YES = BUTTON(image_YES)
+YES.image = YES.transform
+YES.x = 400
 YES.y = 650
 
-NO = BUTTON()
-NO.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
-NO.x = YES.x + 350
+NO = BUTTON(image_NO)
+NO.image = NO.transform
+NO.x = YES.x + 450
 NO.y = YES.y
 
 BUTTONS = pygame.sprite.Group(YES, NO)
 
-SLIME_copy = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+SLIME_copy = SLIME_obj.image
 SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
 
 Ennemie_copy = pygame.image.load('.\\GRAPHISME\\monstre_test(1).png')
