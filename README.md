@@ -41,10 +41,12 @@ Click Gauche pour clicker sur "Yes" ou "No" (et fermer)
 Echap ou croix pour fermer 
  
 
-### Clément=C Edward=E Maximilien=M
+
 
 # Planning pour notre jeu de NSI
- 
+
+### Clément=C Edward=E Maximilien=M
+
 ## Semaine 1 :
   - Inventer un jeu, le nom, le but, le type de jeu, la vue... C/M/E
   - Ecrire le README pour présenter le projet brèvement.    C
