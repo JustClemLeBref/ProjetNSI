@@ -101,7 +101,7 @@ Aseprite: https://www.aseprite.org/
 
 
 ## avancement du projet
-  -On est un tout petit peu en avance sur le planning, mais on est un peu déçu de ne pas avoir pu avancer tant que ça sur le projet pendant les vacances car on était pas chez soi.
+  -On est un tout petit peu en avance sur le planning, mais on est un peu déçu de ne pas avoir pu avancer tant que ça sur le projet pendant les vacances car on était pas chez nous.
 
 
 
