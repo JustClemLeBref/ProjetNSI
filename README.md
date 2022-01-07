@@ -24,6 +24,23 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
+# Manuel d'utilisation 
+Pour lancer le jeu:
+-il faut télécharger le dossier zip
+-Extraire le fichier zip
+-L'ouvrir dans Pyzo (ou autre logiciel de Python)
+-Si sur Pyzo, faire Control + Shift + E 
+-Puis lancer le programme
+
+## TOUCHES
+Pour controler le personnage :
+D pour aller a droite
+Q pour aller a gauche
+Z pour sauter 
+Click Gauche pour clicker sur "Yes" ou "No" (et fermer)
+Echap ou croix pour fermer 
+ 
+
 ### Clément=C Edward=E Maximilien=M
 
 # Planning pour notre jeu de NSI
