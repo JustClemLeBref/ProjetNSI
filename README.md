@@ -29,6 +29,7 @@ Pour lancer le jeu:
 -il faut télécharger le dossier zip
 -Extraire le fichier zip
 -L'ouvrir dans Pyzo (ou autre logiciel de Python)
+-le nom du fichier s'appelle test 1
 -Si sur Pyzo, faire Control + Shift + E 
 -Puis lancer le programme
 
