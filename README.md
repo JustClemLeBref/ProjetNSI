@@ -24,6 +24,8 @@ Tiled : https://www.mapeditor.org/
 
 Aseprite: https://www.aseprite.org/
 
+Blocs pour platforme: https://opengameart.org/content/simplified-platformer-pack
+
 # Manuel d'utilisation 
 Pour lancer le jeu:
 -il faut télécharger le dossier zip
