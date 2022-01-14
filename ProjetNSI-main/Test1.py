@@ -27,6 +27,7 @@ black = (0, 0, 0)
 #ajoute en plus
 pygame.display.flip()
 clock = pygame.time.Clock()
+    
 
 class game_character(pygame.sprite.Sprite):
     def __init__(self,image):
@@ -57,15 +58,13 @@ class BUTTON(pygame.sprite.Sprite):
         self.x = 300
         self.y = 640
         self.clicked = False
+        self.endresult = 0
 
     def click(self, event_list):
-        active = True
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(event.pos):
-                    active = False
-                    print(active)
-                    
+                    return True
     def update(self):
         self.rect.topleft = self.x, self.y
         
@@ -74,16 +73,18 @@ SLIME_obj = game_character(SLIME_obj_image)
 SLIME_obj.description = "Slimey"
 SLIME_obj.size = (200,200)
 SLIME_obj.image = SLIME_obj.transform
-SLIME_obj.x = 30
-SLIME_obj.y = 750
+coordone_SLIME_obj=(400,750)
+SLIME_obj.x = coordone_SLIME_obj[0]
+SLIME_obj.y = coordone_SLIME_obj[1]
 
 Ennemie_obj_image = '.\\GRAPHISME\\monstre_test.png'
 Ennemie_obj = game_character(Ennemie_obj_image)
 Ennemie_obj.description = "Enemy"
 Ennemie_obj.size = (150,150)
 Ennemie_obj.image = SLIME_obj.transform
-Ennemie_obj.x = 300
-Ennemie_obj.y = 500
+coordone_Ennemie_obj=(300,500)
+Ennemie_obj.x = coordone_Ennemie_obj[0]
+Ennemie_obj.y = coordone_Ennemie_obj[1]
 
 
 all_sprites = pygame.sprite.Group(Ennemie_obj, SLIME_obj)
@@ -94,13 +95,16 @@ image_NO = '.\\GRAPHISME\\NO.png'
 
 YES = BUTTON(image_YES)
 YES.image = YES.transform
-YES.x = 400
-YES.y = 650
+coordone_YES=(400,650)
+YES.x = coordone_YES[0]
+YES.y = coordone_YES[1]
+YES.endresult = 0
 
 NO = BUTTON(image_NO)
 NO.image = NO.transform
 NO.x = YES.x + 450
 NO.y = YES.y
+NO.endresult = 2
 
 BUTTONS = pygame.sprite.Group(YES, NO)
 
@@ -110,6 +114,15 @@ SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
 Ennemie_copy = pygame.image.load('.\\GRAPHISME\\monstre_test(1).png')
 Ennemie_with_flip = pygame.transform.flip(Ennemie_copy, True, False)
 
+
+def restart():
+    color = 0
+    SLIME_obj.x = 100
+    SLIME_obj.y = 650
+    Ennemie_obj.x = 900
+    Ennemie_obj.y = coordone_Ennemie_obj[1]
+    isJump = False
+    
 isJump = False
 jumpCount = 10
 vel = 100
@@ -117,8 +130,11 @@ y = 50
 Position=0
 color=0
 touched = 0
+hearts=1
 
 active = True
+
+
 
 while active:
 
@@ -179,28 +195,43 @@ while active:
 
     #changement de scene
 
-    if color == 0:
-        display_surface.blit(background,(0,0))
-    else:
+    if color == 1:
         display_surface.blit(GameOver,(200,100))
         BUTTONS.update()
         BUTTONS.draw(display_surface)
         YES.click(event_list)
+        if YES.click(event_list):
+            restart()
+            hearts = 1
+            display_surface.blit(background,(0,0))
+            all_sprites.draw(screen)
+            pygame.display.update()
         NO.click(event_list)
-
+        if NO.click(event_list):
+            active = False
+    if color == 2:
+        active = False
+        
     #recherche de collision
 
     all_sprites.update()
 
     collided_bananas = pygame.sprite.spritecollide(Ennemie_obj, SLIMES, False)
     for collided_banana in collided_bananas:
-        Ennemie_obj.kill()
-        SLIME_obj.kill()
-        pygame.display.update()
-        pygame.time.delay(10)
-        color=1
-    #chargement des personage
-    all_sprites.draw(screen)
+        if hearts == 3:
+            Ennemie_obj.kill()
+            SLIME_obj.kill()
+            pygame.display.update()
+            pygame.time.delay(10)
+            color=1
+        else:
+            restart()
+            hearts+=1
+        #chargement des personage
+    
+    if color == 0:
+        display_surface.blit(background,(0,0))
+        all_sprites.draw(screen)
     pygame.display.update()
     clock.tick(30)
     
