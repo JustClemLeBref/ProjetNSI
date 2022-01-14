@@ -27,7 +27,8 @@ black = (0, 0, 0)
 #ajoute en plus
 pygame.display.flip()
 clock = pygame.time.Clock()
-    
+
+
 
 class game_character(pygame.sprite.Sprite):
     def __init__(self,image):
@@ -43,9 +44,48 @@ class game_character(pygame.sprite.Sprite):
         self.jumpCount = 10
         self.vel = 100
         self.speed = 20
-
+    
     def update(self):
         self.rect.topleft = self.x, self.y
+        
+    def calc_grav(self):
+        
+        if self.change_y == 0:
+            self.change_y = 1
+        else:
+            self.change_y += .35
+ 
+        # See if we are on the ground.
+        if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+            self.change_y = 0
+            self.rect.y = SCREEN_HEIGHT - self.rect.height
+ 
+    def jump(self):
+        """ Called when user hits 'jump' button. """
+ 
+        # move down a bit and see if there is a platform below us.
+        # Move down 2 pixels because it doesn't work well if we only move down
+        # 1 when working with a platform moving down.
+        self.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        self.rect.y -= 2
+ 
+        # If it is ok to jump, set our speed upwards
+        if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
+            self.change_y = -10
+
+ 
+class Platform(pygame.sprite.Sprite):
+    """ Platform Bloobey jump on """
+ 
+    def __init__(self, width, height):
+        super().__init__()
+ 
+        self.image = pygame.Surface([width, height])
+        self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
+ 
+        self.rect = self.image.get_rect()
+ 
 
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
@@ -117,11 +157,14 @@ Ennemie_with_flip = pygame.transform.flip(Ennemie_copy, True, False)
 
 def restart():
     color = 0
-    SLIME_obj.x = 100
-    SLIME_obj.y = 650
+    SLIME_obj.x = 420
+    SLIME_obj.y = 640
     Ennemie_obj.x = 900
     Ennemie_obj.y = coordone_Ennemie_obj[1]
     isJump = False
+    jumpCount = -11
+    vel = 650
+    y = 50
     
 isJump = False
 jumpCount = 10
@@ -130,6 +173,7 @@ y = 50
 Position=0
 color=0
 touched = 0
+ancien=SLIME_obj.x
 hearts=1
 
 active = True
@@ -137,6 +181,10 @@ active = True
 
 
 while active:
+    if SLIME_obj.x != ancien:
+        print(SLIME_obj.x)
+        print(SLIME_obj.y)
+        ancien=SLIME_obj.x
 
     event_list = pygame.event.get()
 
@@ -149,7 +197,24 @@ while active:
         if keyboard.is_pressed('ESC'): # si la touche 'z' est pressé
             print('You Pressed ECHAP Key!')
             active = False
+    except:
+        break  # si l'utilisateur appuie sur une autre touche, la boucle s'arrete
+    
+    #recherche de collision
 
+    all_sprites.update()
+
+    collided_bananas = pygame.sprite.spritecollide(Ennemie_obj, SLIMES, False)
+    for collided_banana in collided_bananas:
+        if hearts == 3:
+            pygame.time.delay(10)
+            color=1
+        else:
+            restart()
+            hearts+=1
+        #chargement des personage
+    
+    try:
         #si la touche 'q' est appuier
         if keyboard.is_pressed('d'):
             if SLIME_obj.x != 1000:
@@ -201,34 +266,15 @@ while active:
         BUTTONS.draw(display_surface)
         YES.click(event_list)
         if YES.click(event_list):
-            restart()
             hearts = 1
-            display_surface.blit(background,(0,0))
-            all_sprites.draw(screen)
-            pygame.display.update()
-        NO.click(event_list)
+            color=0
+            restart()
+            
         if NO.click(event_list):
             active = False
     if color == 2:
         active = False
         
-    #recherche de collision
-
-    all_sprites.update()
-
-    collided_bananas = pygame.sprite.spritecollide(Ennemie_obj, SLIMES, False)
-    for collided_banana in collided_bananas:
-        if hearts == 3:
-            Ennemie_obj.kill()
-            SLIME_obj.kill()
-            pygame.display.update()
-            pygame.time.delay(10)
-            color=1
-        else:
-            restart()
-            hearts+=1
-        #chargement des personage
-    
     if color == 0:
         display_surface.blit(background,(0,0))
         all_sprites.draw(screen)
