@@ -27,10 +27,10 @@ class Player(pygame.sprite.Sprite):
  
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-        width = 40
-        height = 60
-        self.image = pygame.Surface([width, height])
-        self.image.fill(RED)
+        width = 75
+        height = 75
+        self.image = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+        self.image = pygame.transform.scale(self.image, (width, height))
  
         # Set a referance to the image rect.
         self.rect = self.image.get_rect()
@@ -126,8 +126,9 @@ class Platform(pygame.sprite.Sprite):
             code. """
         super().__init__()
  
-        self.image = pygame.Surface([width, height])
-        self.image.fill(GREEN)
+        self.image = pygame.image.load('.\\GRAPHISME\\Grass_Block.jpg')
+        self.image = pygame.transform.scale(self.image, (width, height))
+        
  
         self.rect = self.image.get_rect()
  
@@ -178,6 +179,7 @@ class Level_01(Level):
         level = [[210, 70, 500, 500],
                  [210, 70, 200, 400],
                  [210, 70, 600, 300],
+                 [210, 70, 200, 200],
                  ]
  
         # Go through the array above and add platforms
