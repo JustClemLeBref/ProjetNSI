@@ -63,7 +63,7 @@ class game_character(pygame.sprite.Sprite):
         # on rregarde si le joueur est au sol
         if self.rect.y >= screen_height - 150 and self.y >= 0:
             self.y= 0
-            self.y = screen_height - self.rect.heightww
+            self.y = screen_height - self.rect.height
             
     #variable pour le saut du joueur
     def jump(self):
