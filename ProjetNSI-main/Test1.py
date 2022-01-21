@@ -17,6 +17,7 @@ background = pygame.image.load('.\\GRAPHISME\\background1.png')
 icon = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
 pygame.display.set_icon(icon)
 
+#Image du GameOver
 GameOver=pygame.image.load('.\\GRAPHISME\\GAMEOVER.jpg')
 GameOver = pygame.transform.scale(GameOver, (1000, 1000))
 
@@ -24,12 +25,12 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 black = (0, 0, 0)
 
-#ajoute en plus
+#on ajoute en plus
 pygame.display.flip()
 clock = pygame.time.Clock()
 
 
-
+#classe du joueur, ses stats
 class game_character(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -46,6 +47,7 @@ class game_character(pygame.sprite.Sprite):
         self.vel = 100
         self.speed = 20
     
+    #création de la gravité
     def update(self):
         self.calc_grav()
         
@@ -58,25 +60,25 @@ class game_character(pygame.sprite.Sprite):
         else:
             self.y += .35
  
-        # See if we are on the ground.
+        # on rregarde si le joueur est au sol
         if self.rect.y >= screen_height - 150 and self.y >= 0:
             self.y= 0
             self.rect.y = screen_height - self.rect.height
- 
+            
+    #variable pour le saut du joueur
     def jump(self):
-        """ Called when user hits 'jump' button. """
+        # appelé quand le joueur veut sauter
  
-        # move down a bit and see if there is a platform below us.
-        # Move down 2 pixels because it doesn't work well if we only move down
-        # 1 when working with a platform moving down.
+        # On bouge un peu vers le bas et on regarde si il y a une plateforme en dessous
         self.rect.y += 2
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         self.rect.y -= 2
  
-        # If it is ok to jump, set our speed upwards
+        # si on peut sauter, on définit la vitesse du saut
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
-
+            
+#classe pour les ennemies, ses stats
 class Ennemie(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -97,16 +99,17 @@ class Ennemie(pygame.sprite.Sprite):
         self.rect.topleft = self.x, self.y
 
 class Platform(pygame.sprite.Sprite):
-    """ Platform Bloobey jump on """
+    #La Platforme où Bloobey saute 
  
     def __init__(self, width, height):
         super().__init__()
- 
+        
+        #image du block principale
         self.image = pygame.Surface([width, height])
         self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
  
         self.rect = self.image.get_rect()
- 
+#class des niveaux du jeu (pas l'XP) 
 class Level(pygame.sprite.Sprite):
  
     def __init__(self, width, height):
@@ -116,7 +119,7 @@ class Level(pygame.sprite.Sprite):
         self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
  
         self.rect = self.image.get_rect()
- 
+#classe du Bouton clickable 
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -129,7 +132,8 @@ class BUTTON(pygame.sprite.Sprite):
         self.y = 640
         self.clicked = False
         self.endresult = 0
-
+     
+    #variable du clickage de bouton
     def click(self, event_list):
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -138,6 +142,7 @@ class BUTTON(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
         
+#Bloobey, apparition sur l'écran      
 SLIME_obj_image = '.\\GRAPHISME\\bloobey-logo.png'
 SLIME_obj = game_character(SLIME_obj_image)
 SLIME_obj.description = "Slimey"
@@ -147,6 +152,7 @@ coordone_SLIME_obj=(400,750)
 SLIME_obj.x = coordone_SLIME_obj[0]
 SLIME_obj.y = coordone_SLIME_obj[1]
 
+#apparition de l'ennemi sur l'écran
 Ennemie_obj_image = '.\\GRAPHISME\\monstre_test.png'
 Ennemie_obj = Ennemie(Ennemie_obj_image)
 Ennemie_obj.description = "Enemy"
@@ -160,6 +166,7 @@ Ennemie_obj.y = coordone_Ennemie_obj[1]
 all_sprites = pygame.sprite.Group(Ennemie_obj, SLIME_obj)
 SLIMES = pygame.sprite.Group(SLIME_obj)
 
+#boutons Yes et No et leurs valeurs
 image_YES = '.\\GRAPHISME\\YES.png'
 image_NO = '.\\GRAPHISME\\NO.png'
 
@@ -184,7 +191,7 @@ SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
 Ennemie_copy = pygame.image.load('.\\GRAPHISME\\monstre_test(1).png')
 Ennemie_with_flip = pygame.transform.flip(Ennemie_copy, True, False)
 
-
+#variable qui reset le personnage et le replace au début 
 def restart():
     color = 0
     SLIME_obj.x = 420
@@ -223,8 +230,8 @@ while active:
             active = False
             
 
-    try:  # used try so that if user pressed other than the given key error will not be shown
-        if keyboard.is_pressed('ESC'): # si la touche 'z' est pressé
+    try:  # try préviens le code si une autre touche que celle donné est appuyé par l'utilisateur
+        if keyboard.is_pressed('ESC'): # si la touche 'échappe' est pressé
             print('You Pressed ECHAP Key!')
             active = False
     except:
@@ -242,15 +249,15 @@ while active:
         else:
             restart()
             hearts+=1
-        #chargement des personage
+        #chargement des personages
     
     try:
-        #si la touche 'q' est appuier
+        #si la touche 'd' est appuyer
         if keyboard.is_pressed('d'):
             if SLIME_obj.x != 1000:
                 SLIME_obj.x=SLIME_obj.x+10
             SLIME_obj.image=SLIME_with_flip
-        # si la touche 'q' est appuier
+        # si la touche 'd' est appuyer
         if keyboard.is_pressed('q'):
             if SLIME_obj.x!=-10:
                 SLIME_obj.x=SLIME_obj.x-10
@@ -299,7 +306,7 @@ while active:
             hearts = 1
             color=0
             restart()
-            
+        #si on appuie sur 'No', on quitte le jeu    
         if NO.click(event_list):
             active = False
     if color == 2:
@@ -312,3 +319,4 @@ while active:
     clock.tick(30)
     
 pygame.quit()
+#fin du code et sortie de la fenêtre
