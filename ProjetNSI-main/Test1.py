@@ -40,25 +40,28 @@ class game_character(pygame.sprite.Sprite):
         self.x = 300
         self.y = 640
         self.rect = self.image.get_rect()
+        self.rect.height = self.size[0]
         self.isJump = False
         self.jumpCount = 10
         self.vel = 100
         self.speed = 20
     
     def update(self):
-        self.rect.topleft = self.x, self.y
+        self.calc_grav()
         
+        self.rect.topleft = self.x, self.y
+
     def calc_grav(self):
         
-        if self.change_y == 0:
-            self.change_y = 1
+        if self.y == 0:
+            self.y = 1
         else:
-            self.change_y += .35
+            self.y += .35
  
         # See if we are on the ground.
-        if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
-            self.change_y = 0
-            self.rect.y = SCREEN_HEIGHT - self.rect.height
+        if self.rect.y >= screen_height - 150 and self.y >= 0:
+            self.y= 0
+            self.rect.y = screen_height - self.rect.height
  
     def jump(self):
         """ Called when user hits 'jump' button. """
@@ -74,7 +77,25 @@ class game_character(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
 
- 
+class Ennemie(pygame.sprite.Sprite):
+    def __init__(self,image):
+        super().__init__()
+        self.description = "default"
+        self.image = pygame.image.load(image)
+        self.size = (150,150)
+        self.transform = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
+        self.x = 300
+        self.y = 640
+        self.rect = self.image.get_rect()
+        self.isJump = False
+        self.jumpCount = 10
+        self.vel = 100
+        self.speed = 20
+    
+    def update(self):
+
+        self.rect.topleft = self.x, self.y
+
 class Platform(pygame.sprite.Sprite):
     """ Platform Bloobey jump on """
  
@@ -86,7 +107,16 @@ class Platform(pygame.sprite.Sprite):
  
         self.rect = self.image.get_rect()
  
-
+class Level(pygame.sprite.Sprite):
+ 
+    def __init__(self, width, height):
+        super().__init__()
+ 
+        self.image = pygame.Surface([width, height])
+        self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
+ 
+        self.rect = self.image.get_rect()
+ 
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -118,7 +148,7 @@ SLIME_obj.x = coordone_SLIME_obj[0]
 SLIME_obj.y = coordone_SLIME_obj[1]
 
 Ennemie_obj_image = '.\\GRAPHISME\\monstre_test.png'
-Ennemie_obj = game_character(Ennemie_obj_image)
+Ennemie_obj = Ennemie(Ennemie_obj_image)
 Ennemie_obj.description = "Enemy"
 Ennemie_obj.size = (150,150)
 Ennemie_obj.image = SLIME_obj.transform
@@ -282,4 +312,3 @@ while active:
     clock.tick(30)
     
 pygame.quit()
-#fermeture du jeu, fin du programme
