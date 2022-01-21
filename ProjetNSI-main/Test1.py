@@ -282,3 +282,4 @@ while active:
     clock.tick(30)
     
 pygame.quit()
+#fermeture du jeu, fin du programme
