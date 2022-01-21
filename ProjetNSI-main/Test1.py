@@ -3,6 +3,7 @@ import pygame
 import keyboard
 import random
 
+ 
 #création de la fenetre
 pygame.init()
 
@@ -41,12 +42,11 @@ class game_character(pygame.sprite.Sprite):
         self.x = 300
         self.y = 640
         self.rect = self.image.get_rect()
-        self.rect.height = self.size[0]
         self.isJump = False
         self.jumpCount = 10
         self.vel = 100
         self.speed = 20
-    
+
     #création de la gravité
     def update(self):
         self.calc_grav()
@@ -58,25 +58,25 @@ class game_character(pygame.sprite.Sprite):
         if self.y == 0:
             self.y = 1
         else:
-            self.y += .35
+            self.y += .90
  
         # on rregarde si le joueur est au sol
         if self.rect.y >= screen_height - 150 and self.y >= 0:
             self.y= 0
-            self.rect.y = screen_height - self.rect.height
+            self.y = screen_height - self.rect.heightww
             
     #variable pour le saut du joueur
     def jump(self):
         # appelé quand le joueur veut sauter
  
         # On bouge un peu vers le bas et on regarde si il y a une plateforme en dessous
-        self.rect.y += 2
+        self.y += 2
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.rect.y -= 2
+        self.y -= 2
  
         # si on peut sauter, on définit la vitesse du saut
-        if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
-            self.change_y = -10
+        if len(platform_hit_list) > 0 or self.rect.bottom >= screen_height:
+            self.y = -10
             
 #classe pour les ennemies, ses stats
 class Ennemie(pygame.sprite.Sprite):
@@ -106,19 +106,10 @@ class Platform(pygame.sprite.Sprite):
         
         #image du block principale
         self.image = pygame.Surface([width, height])
-        self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
+        self.image = pygame.image.load('.\\GRAPHISME\\Spikes.png')
  
         self.rect = self.image.get_rect()
-#class des niveaux du jeu (pas l'XP) 
-class Level(pygame.sprite.Sprite):
- 
-    def __init__(self, width, height):
-        super().__init__()
- 
-        self.image = pygame.Surface([width, height])
-        self.image.load('.\\GRAPHISME\\Grass_Block.jpg')
- 
-        self.rect = self.image.get_rect()
+
 #classe du Bouton clickable 
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
@@ -142,6 +133,48 @@ class BUTTON(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
         
+# Create platforms for the level
+class Level():
+    """ Definition for level 1. """
+ 
+    def __init__(self):
+        """ Create level 1. """
+ 
+        self.platform_list = pygame.sprite.Group()
+        self.enemy_list = pygame.sprite.Group()
+        # Array with width, height, x, and y of platform
+        level = [[210, 70, 500, 500],
+                 [210, 70, 200, 400],
+                 [210, 70, 600, 300],
+                 [210, 70, 200, 200],
+                 ]
+ 
+        # Go through the array above and add platforms
+        for platform in level:
+            block = Platform(platform[0], platform[1])
+            block.rect.x = platform[2]
+            block.rect.y = platform[3]
+            self.platform_list.add(block)
+    def update(self):
+        """ Update everything in this level."""
+        self.platform_list.update()
+        self.enemy_list.update()
+    def draw(self, screen):
+        # Draw all the sprite lists that we have
+        self.platform_list.draw(screen)
+        self.enemy_list.draw(screen)
+#variable qui reset le personnage et le replace au début 
+def restart():
+    color = 0
+    SLIME_obj.x = 420
+    SLIME_obj.y = 640
+    Ennemie_obj.x = 900
+    Ennemie_obj.y = coordone_Ennemie_obj[1]
+    isJump = False
+    jumpCount = -11
+    vel = 650
+    y = 50
+
 #Bloobey, apparition sur l'écran      
 SLIME_obj_image = '.\\GRAPHISME\\bloobey-logo.png'
 SLIME_obj = game_character(SLIME_obj_image)
@@ -190,19 +223,7 @@ SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
 
 Ennemie_copy = pygame.image.load('.\\GRAPHISME\\monstre_test(1).png')
 Ennemie_with_flip = pygame.transform.flip(Ennemie_copy, True, False)
-
-#variable qui reset le personnage et le replace au début 
-def restart():
-    color = 0
-    SLIME_obj.x = 420
-    SLIME_obj.y = 640
-    Ennemie_obj.x = 900
-    Ennemie_obj.y = coordone_Ennemie_obj[1]
-    isJump = False
-    jumpCount = -11
-    vel = 650
-    y = 50
-    
+   
 isJump = False
 jumpCount = 10
 vel = 100
@@ -218,6 +239,14 @@ active = True
 
 
 while active:
+    # Create all the levels
+    level_list = []
+    level_list.append( Level() )
+ 
+    # Set the current level
+    current_level_no = 0
+    current_level = level_list[current_level_no]
+ 
     if SLIME_obj.x != ancien:
         print(SLIME_obj.x)
         print(SLIME_obj.y)
@@ -262,22 +291,10 @@ while active:
             if SLIME_obj.x!=-10:
                 SLIME_obj.x=SLIME_obj.x-10
             SLIME_obj.image=SLIME_copy
+        if keyboard.is_pressed('z'):
+            SLIME_obj.jump()
     except:
         break  # si l'utilisateur appuie sur une autre touche, la boucle s'arrete
-
-    if not(isJump):
-        if keyboard.is_pressed('z'):  # si la touche 'z' est pressé
-            if SLIME_obj.y > vel:
-                SLIME_obj.y -= vel
-            isJump = True
-    else:
-        if jumpCount >= -10:
-            SLIME_obj.y -= (jumpCount * abs(jumpCount)) * 0.5
-            jumpCount -= 1
-        else:
-            SLIME_obj.y += 2*y
-            jumpCount = 10
-            isJump = False
 
     #boucle des mouvements du monstre
 
@@ -293,9 +310,9 @@ while active:
             Ennemie_obj.image = Ennemie_with_flip
         else:
             Position = 0
-    display_surface = pygame.display.set_mode((screen_width, screen_height))
-
+    
     #changement de scene
+    display_surface = pygame.display.set_mode((screen_width, screen_height))
 
     if color == 1:
         display_surface.blit(GameOver,(200,100))
