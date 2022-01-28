@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 #titre, background et icon
 pygame.display.set_caption("BLOOBEY")
-background = pygame.image.load('.\\GRAPHISME\\background1.png')
+background = pygame.image.load('.\\GRAPHISME\\Background_Sized.png')
 icon = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
 pygame.display.set_icon(icon)
 
@@ -42,41 +42,37 @@ class game_character(pygame.sprite.Sprite):
         self.x = 300
         self.y = 640
         self.rect = self.image.get_rect()
-        self.isJump = False
-        self.jumpCount = 10
-        self.vel = 100
-        self.speed = 20
+        isJump = False
 
     #création de la gravité
     def update(self):
         self.calc_grav()
-        
         self.rect.topleft = self.x, self.y
 
     def calc_grav(self):
-        
-        if self.y == 0:
-            self.y = 1
-        else:
-            self.y += .90
- 
-        # on rregarde si le joueur est au sol
-        if self.rect.y >= screen_height - 150 and self.y >= 0:
-            self.y= 0
-            self.y = screen_height - self.rect.height
+        if self.y <= screen_height - 150 and self.y >= 0:
+            if not(isJump):
+                if jumpCount>= -10:
+                    self.y -= (jumpCount * abs(jumpCount)) * 0,5
+                    jumpCount -= 1
+                else:
+                    jumpCount = 10
+                    isJump=False
+                    
             
     #variable pour le saut du joueur
     def jump(self):
-        # appelé quand le joueur veut sauter
- 
-        # On bouge un peu vers le bas et on regarde si il y a une plateforme en dessous
-        self.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.y -= 2
- 
-        # si on peut sauter, on définit la vitesse du saut
-        if len(platform_hit_list) > 0 or self.rect.bottom >= screen_height:
-            self.y = -10
+        if not(isJump):
+            if keyboard.is_pressed('z'):
+                isJump = True
+        else:
+            if jumpCount>= 0:
+                self.y -= (jumpCount * abs(jumpCount)) * 0,5
+                jumpCount -= 1
+            else:
+                jumpCount = 10
+                isJump=False
+            
             
 #classe pour les ennemies, ses stats
 class Ennemie(pygame.sprite.Sprite):
@@ -141,7 +137,6 @@ class Level():
         """ Create level 1. """
  
         self.platform_list = pygame.sprite.Group()
-        self.enemy_list = pygame.sprite.Group()
         # Array with width, height, x, and y of platform
         level = [[210, 70, 500, 500],
                  [210, 70, 200, 400],
@@ -158,11 +153,9 @@ class Level():
     def update(self):
         """ Update everything in this level."""
         self.platform_list.update()
-        self.enemy_list.update()
     def draw(self, screen):
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
-        self.enemy_list.draw(screen)
 #variable qui reset le personnage et le replace au début 
 def restart():
     color = 0
@@ -242,7 +235,7 @@ while active:
     # Create all the levels
     level_list = []
     level_list.append( Level() )
- 
+    
     # Set the current level
     current_level_no = 0
     current_level = level_list[current_level_no]
@@ -291,8 +284,7 @@ while active:
             if SLIME_obj.x!=-10:
                 SLIME_obj.x=SLIME_obj.x-10
             SLIME_obj.image=SLIME_copy
-        if keyboard.is_pressed('z'):
-            SLIME_obj.jump()
+        SLIME_obj.jump()
     except:
         break  # si l'utilisateur appuie sur une autre touche, la boucle s'arrete
 
@@ -332,8 +324,9 @@ while active:
     if color == 0:
         display_surface.blit(background,(0,0))
         all_sprites.draw(screen)
+        current_level.draw(screen)
+        
     pygame.display.update()
     clock.tick(30)
-    
 pygame.quit()
 #fin du code et sortie de la fenêtre
