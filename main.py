@@ -14,12 +14,12 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 #titre, background et icon
 pygame.display.set_caption("BLOOBEY")
-background = pygame.image.load('.\\GRAPHISME\\Background_Sized.png')
-icon = pygame.image.load('.\\GRAPHISME\\bloobey-logo.png')
+background = pygame.image.load('GRAPHISME/Background_Sized.png')
+icon = pygame.image.load('GRAPHISME/bloobey-logo.png')
 pygame.display.set_icon(icon)
 
 #Image du GameOver
-GameOver=pygame.image.load('.\\GRAPHISME\\GAMEOVER.jpg')
+GameOver=pygame.image.load('GRAPHISME/GAMEOVER.jpg')
 GameOver = pygame.transform.scale(GameOver, (1000, 1000))
 
 white = (255, 255, 255)
@@ -102,7 +102,7 @@ class Platform(pygame.sprite.Sprite):
         
         #image du block principale
         self.image = pygame.Surface([width, height])
-        self.image = pygame.image.load('.\\GRAPHISME\\Spikes.png')
+        self.image = pygame.image.load('GRAPHISME/Spikes.png')
  
         self.rect = self.image.get_rect()
 
@@ -169,7 +169,7 @@ def restart():
     y = 50
 
 #Bloobey, apparition sur l'écran      
-SLIME_obj_image = '.\\GRAPHISME\\bloobey-logo.png'
+SLIME_obj_image = 'GRAPHISME/bloobey-logo.png'
 SLIME_obj = game_character(SLIME_obj_image)
 SLIME_obj.description = "Slimey"
 SLIME_obj.size = (200,200)
@@ -179,7 +179,7 @@ SLIME_obj.x = coordone_SLIME_obj[0]
 SLIME_obj.y = coordone_SLIME_obj[1]
 
 #apparition de l'ennemi sur l'écran
-Ennemie_obj_image = '.\\GRAPHISME\\monstre_test.png'
+Ennemie_obj_image = 'GRAPHISME/monstre_test.png'
 Ennemie_obj = Ennemie(Ennemie_obj_image)
 Ennemie_obj.description = "Enemy"
 Ennemie_obj.size = (150,150)
@@ -193,8 +193,8 @@ all_sprites = pygame.sprite.Group(Ennemie_obj, SLIME_obj)
 SLIMES = pygame.sprite.Group(SLIME_obj)
 
 #boutons Yes et No et leurs valeurs
-image_YES = '.\\GRAPHISME\\YES.png'
-image_NO = '.\\GRAPHISME\\NO.png'
+image_YES = 'GRAPHISME/YES.png'
+image_NO = 'GRAPHISME/NO.png'
 
 YES = BUTTON(image_YES)
 YES.image = YES.transform
@@ -214,7 +214,7 @@ BUTTONS = pygame.sprite.Group(YES, NO)
 SLIME_copy = SLIME_obj.image
 SLIME_with_flip = pygame.transform.flip(SLIME_copy, True, False)
 
-Ennemie_copy = pygame.image.load('.\\GRAPHISME\\monstre_test(1).png')
+Ennemie_copy = pygame.image.load('GRAPHISME/monstre_test(1).png')
 Ennemie_with_flip = pygame.transform.flip(Ennemie_copy, True, False)
    
 isJump = False
