@@ -47,7 +47,7 @@ def mainmenu():
     #def position et importation bouton play
     image_play = '.\\main_screen_images\\Play_button.png'
     play = BUTTON(image_play,(350,250))
-    coordone_play=(515,600)
+    coordone_play=(515,575)
     play.x = coordone_play[0]
     play.y = coordone_play[1]
     play.endresult = 0
@@ -79,9 +79,17 @@ def mainmenu():
     Tbloobey.y = coordone_Tbloobey[1]
     Tbloobey.endresult = 0
     
+    #def position et importation  icone settings
+    image_icone_setting = '.\\main_screen_images\\setting_icon.png'
+    Isetting = BUTTON(image_icone_setting,(100,100))
+    coordone_Isetting=(0,0)
+    Isetting.x = coordone_Isetting[0]
+    Isetting.y = coordone_Isetting[1]
+    Isetting.endresult = 0
     
-    BUTTONS = pygame.sprite.Group(play,monster,bloobey,Tbloobey)
     
+    BUTTONS = pygame.sprite.Group(play,monster,bloobey,Tbloobey,Isetting)
+    menu= False
     continuer = True
     while continuer :
         pygame.display.update() 
@@ -95,12 +103,21 @@ def mainmenu():
         
         BUTTONS.update()
         BUTTONS.draw(display_surface)
+        
+        if Isetting.click(event_list):
+            menu=not(menu)
+        if menu:
+            menu_image = pygame.image.load('.\\main_screen_images\\setting2.png')
+            display_surface.blit(menu_image, (525, 250))
+    
+             
+                
+                
         if play.click(event_list):
             continuer=False
             pygame.quit() 
     
             
-        
         for event in event_list : 
     
             if event.type == pygame.QUIT :
