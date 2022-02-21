@@ -1,7 +1,7 @@
 
 #importation des modules nécessaires
 import pygame
-
+import teste1
 #dimension de la fenetre
 screen_width = 1440
 screen_height = 1000
@@ -312,8 +312,7 @@ def main():
         
         
         if SLIME_obj.rect.x != ancien:
-            print(SLIME_obj.rect.x)
-            print(SLIME_obj.rect.y)
+            print(SLIME_obj.rect.x,SLIME_obj.rect.y)
         ancien=SLIME_obj.rect.x
         
         for event in event_list:
@@ -353,8 +352,7 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
-            """
-        """
+
         # Update items in the level
         current_level.update()
         active_sprite_list.update()
@@ -375,7 +373,7 @@ def main():
         
         for Collision in collision_sprite:
             
-            GameOver_Scene(event_list)
+            active = False
         
         
         screen.blit(background,(0,0))
@@ -393,9 +391,11 @@ def main():
     pygame.quit()
 
 
-def GameOver_Scene(Event):
+def GameOver_Scene():
+    pygame.init()
     display_surface = pygame.display.set_mode((screen_width, screen_height))
-
+    
+    pygame.display.set_caption('Image')   
 
     #Image du GameOver
     GameOver=pygame.image.load('GRAPHISME/GAMEOVER.jpg')
@@ -420,17 +420,27 @@ def GameOver_Scene(Event):
     
     BUTTONS = pygame.sprite.Group(YES, NO)
     
-    display_surface.blit(GameOver,(200,100))
-    
-    BUTTONS.update()
-    
-    BUTTONS.draw(display_surface)
-    
-    if YES.click(Event):
-        active=True
-    #si on appuie sur 'No', on quitte le jeu    
-    if NO.click(Event):
-        active=False
+    active = True
+    while active:
+        pygame.display.update() 
+        Event = pygame.event.get()
+        display_surface.blit(GameOver,(200,100))
+        BUTTONS.update()
+        BUTTONS.draw(display_surface)
+        
+        if YES.click(Event):
+            active = False
+            pygame.quit()
+            restart()
+        #si on appuie sur 'No', on quitte le jeu    
+        if NO.click(Event):
+            active=False
+            pygame.quit()
 
-main()
+def restart():
+    main()
+    GameOver_Scene()
+
+teste1.mainmenu()
+restart()
 
