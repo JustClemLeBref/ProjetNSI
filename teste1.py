@@ -56,7 +56,7 @@ def mainmenu():
     #def position et importation monstre 
     image_monster = '.\\main_screen_images\\Monster.png'
     monster = BUTTON(image_monster,(250,400))
-    coordone_monster=(10,470)
+    coordone_monster=(150,470)
     monster.x = coordone_monster[0]
     monster.y = coordone_monster[1]
     monster.endresult = 0
@@ -71,7 +71,7 @@ def mainmenu():
     bloobey.endresult = 0
     
     
-    #def position et importation BLOOBEY
+    #def position et importation  titre BLOOBEY
     image_Tbloobey = '.\\main_screen_images\\titre_Bloobey-removebg-preview(2).png'
     Tbloobey = BUTTON(image_Tbloobey,(1500,1500))
     coordone_Tbloobey=(-60,-600)
