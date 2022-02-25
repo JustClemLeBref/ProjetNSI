@@ -224,6 +224,7 @@ class Level_1(Level):
         self.platform_list = pygame.sprite.Group()
         cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
         cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
+        door = 'GRAPHISME\Cubes\door_orange.png'
         # Array with width, height, x, and y of platform
         level = [[100, 100, 100, 810,cube1],
                  [100, 100, 0, 810,cube2],
@@ -232,10 +233,11 @@ class Level_1(Level):
                  [100, 100, 900, 710,cube2],
                  [100, 100, 1000, 710,cube1],
                  [100, 100, 400, 510,cube2],
-                 [100, 100, 500, 510,cube1],]
+                 [100, 100, 500, 510,cube1],
+                 ]
                 
                  
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)]]
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],[door,(100, 100), (450, 410)],]
         
         # Go through the array above and add platforms
         
@@ -321,6 +323,7 @@ def main():
 
     
     while active:
+        
         event_list = pygame.event.get()
         
         
@@ -389,9 +392,8 @@ def main():
         
         for Collision in collision_sprite:
             
-            GameOver_Scene(event_list)
-        if SLIME_obj.rect.y == 800:
-            GameOver_Scene(event_list)
+            GameOver_Scene()
+            active = False
         
         
         screen.blit(background,(0,0))
@@ -400,11 +402,15 @@ def main():
         
 
         # Limit to 60 frames per second
+        
         clock.tick(60)
         
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
         
+        if SLIME_obj.rect.y == 800:
+            GameOver_Scene()
+            active = False
     #fin du code et sortie de la fenêtre
     pygame.quit()
 
