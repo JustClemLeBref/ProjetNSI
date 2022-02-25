@@ -2,6 +2,7 @@
 #importation des modules nécessaires
 import pygame
 import teste1
+
 #dimension de la fenetre
 screen_width = 1440
 screen_height = 1000
@@ -76,9 +77,9 @@ class Player(pygame.sprite.Sprite):
             self.change_y += .25
  
         # See if we are on the ground.
-        if self.rect.y >= screen_height - self.rect.height  and self.change_y >= 0: 
+        if self.rect.y >= screen_height - self.rect.height-100  and self.change_y >= 0: 
             self.change_y = 0
-            self.rect.y = screen_height - self.rect.height
+            self.rect.y = screen_height - self.rect.height-100
  
     def jump(self):
         """ Called when user hits 'jump' button. """
@@ -125,7 +126,7 @@ class Ennemie(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.topleft = self.x, self.y
-        self.deplacement()
+        #self.deplacement()
     def deplacement(self):
         if self.state==0:
             if self.x != 1000:
@@ -139,18 +140,7 @@ class Ennemie(pygame.sprite.Sprite):
                 self.image = self.original_flip
             else:
                 self.state = 0
-class Platform(pygame.sprite.Sprite):
-    #La Platforme où Bloobey saute 
- 
-    def __init__(self, width, height):
-        super().__init__()
-        
-        #image du block principale
-        self.image = pygame.Surface([width, height])
-        self.image.fill(GREEN)
-        #self.image = pygame.image.load('GRAPHISME/Spikes.png')
- 
-        self.rect = self.image.get_rect()
+
 
 #classe du Bouton clickable 
 class BUTTON(pygame.sprite.Sprite):
@@ -175,6 +165,23 @@ class BUTTON(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
         
+class Platform(pygame.sprite.Sprite):
+    #La Platforme où Bloobey saute 
+ 
+    def __init__(self, width, height,image):
+        super().__init__()
+        
+        #image du block principale
+        
+        
+        self.image = pygame.Surface([width, height])
+        #self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(pygame.image.load(image), (width, height))
+        #self.image.fill(GREEN)
+ 
+        self.rect = self.image.get_rect()
+        
+
 class Level(object):
     """ This is a generic super-class used to define a level.
         Create a child class for each level with level-specific
@@ -215,19 +222,25 @@ class Level_1(Level):
         Level.__init__(self, player)
         
         self.platform_list = pygame.sprite.Group()
+        cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
+        cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
         # Array with width, height, x, and y of platform
-        level = [[300, 100, 600, 900],
-                 [0, 0, 0, 0],
-                 [0, 0, 0, 0],
-                 [0, 0, 0, 0],]
+        level = [[100, 100, 100, 810,cube1],
+                 [100, 100, 0, 810,cube2],
+                 [100, 100, 500, 810,cube2],
+                 [100, 100, 600, 810,cube1],
+                 [100, 100, 900, 710,cube2],
+                 [100, 100, 1000, 710,cube1],
+                 [100, 100, 400, 510,cube2],
+                 [100, 100, 500, 510,cube1],]
                 
                  
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (300,500)]]
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)]]
         
         # Go through the array above and add platforms
         
         for platform in level:
-            block = Platform(platform[0], platform[1])
+            block = Platform(platform[0], platform[1],platform[4])
             block.rect.x = platform[2]
             block.rect.y = platform[3]
             block.player = self.player
@@ -251,6 +264,7 @@ class Level_1(Level):
     def draw(self, screen):
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
+        self.enemy_list.draw(screen)
 #variable qui reset le personnage et le replace au début 
 
 
@@ -289,7 +303,7 @@ def main():
     SLIME_obj.level = current_level
     active_sprite_list.add(SLIME_obj)
     
-    coordone_SLIME_obj=(100,screen_height - 100)
+    coordone_SLIME_obj=(100,screen_height - 250)
     SLIME_obj.rect.x = coordone_SLIME_obj[0]
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
     
@@ -312,7 +326,8 @@ def main():
         
         
         if SLIME_obj.rect.x != ancien:
-            print(SLIME_obj.rect.x,SLIME_obj.rect.y)
+            print(SLIME_obj.rect.x)
+            print(SLIME_obj.rect.y)
         ancien=SLIME_obj.rect.x
         
         for event in event_list:
@@ -352,7 +367,8 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
-
+            """
+        """
         # Update items in the level
         current_level.update()
         active_sprite_list.update()
@@ -373,7 +389,9 @@ def main():
         
         for Collision in collision_sprite:
             
-            active = False
+            GameOver_Scene(event_list)
+        if SLIME_obj.rect.y == 800:
+            GameOver_Scene(event_list)
         
         
         screen.blit(background,(0,0))
@@ -389,6 +407,7 @@ def main():
         
     #fin du code et sortie de la fenêtre
     pygame.quit()
+
 
 
 def GameOver_Scene():
