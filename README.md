@@ -37,11 +37,11 @@ Pour lancer le jeu:
 
 ## TOUCHES
 Pour controler le personnage :
-D pour aller a droite
-Q pour aller a gauche
-Z pour sauter 
+FlecheD pour aller a droite
+FlecheG pour aller a gauche
+FlecheH pour sauter 
 Click Gauche pour clicker sur "Yes" ou "No" (et fermer)
-Echap ou croix pour fermer 
+croix pour fermer 
  
 
 
