@@ -77,9 +77,9 @@ class Player(pygame.sprite.Sprite):
             self.change_y += .25
  
         # See if we are on the ground.
-        if self.rect.y >= screen_height - self.rect.height-100  and self.change_y >= 0: 
+        if self.rect.y >= screen_height - self.rect.height + 300  and self.change_y >= 0: 
             self.change_y = 0
-            self.rect.y = screen_height - self.rect.height-100
+            self.rect.y = screen_height - self.rect.height+300
  
     def jump(self):
         """ Called when user hits 'jump' button. """
@@ -142,24 +142,24 @@ class Ennemie(pygame.sprite.Sprite):
                 self.state = 0
 
 
-#classe du Bouton clickable 
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
         self.description = "default"
-        self.image = pygame.image.load(image)
-        self.size = (150,150)
-        self.transform = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
+        self.size = (100,100)
+        self.image = pygame.transform.scale(pygame.image.load(image), (self.size[0], self.size[1]))
         self.rect = self.image.get_rect()
         self.x = 300
         self.y = 640
+        
         self.clicked = False
         self.endresult = 0
-     
+    
     #variable du clickage de bouton
     def click(self, event_list):
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
+                print(event.pos,self.rect)
                 if self.rect.collidepoint(event.pos):
                     return True
     def update(self):
@@ -305,7 +305,7 @@ def main():
     SLIME_obj.level = current_level
     active_sprite_list.add(SLIME_obj)
     
-    coordone_SLIME_obj=(100,screen_height - 250)
+    coordone_SLIME_obj=(100,screen_height - 200)
     SLIME_obj.rect.x = coordone_SLIME_obj[0]
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
     
@@ -317,7 +317,7 @@ def main():
     
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
-    
+    Quit = True
     active = True
     
 
@@ -338,6 +338,7 @@ def main():
             if event.type == pygame.QUIT:
                 print("A")
                 active = False
+                Quit = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     print('You Pressed ECHAP Key!')
@@ -392,7 +393,7 @@ def main():
         
         for Collision in collision_sprite:
             
-            GameOver_Scene()
+            
             active = False
         
         
@@ -408,19 +409,24 @@ def main():
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
         
-        if SLIME_obj.rect.y == 800:
-            GameOver_Scene()
+        if SLIME_obj.rect.y <= screen_height:
+            
             active = False
     #fin du code et sortie de la fenêtre
-    pygame.quit()
+    if Quit:
+        print("quit")
+        GameOver_Scene()
+    else:
+        pygame.quit()
+    
 
 
 
 def GameOver_Scene():
-    pygame.init()
+    
     display_surface = pygame.display.set_mode((screen_width, screen_height))
     
-    pygame.display.set_caption('Image')   
+    pygame.display.set_caption('GameOver_Scene')   
 
     #Image du GameOver
     GameOver=pygame.image.load('GRAPHISME/GAMEOVER.jpg')
@@ -431,14 +437,12 @@ def GameOver_Scene():
     image_NO = 'GRAPHISME/NO.png'
     
     YES = BUTTON(image_YES)
-    YES.image = YES.transform
     coordone_YES=(400,650)
     YES.x = coordone_YES[0]
     YES.y = coordone_YES[1]
     YES.endresult = 0
     
     NO = BUTTON(image_NO)
-    NO.image = NO.transform
     NO.x = YES.x + 450
     NO.y = YES.y
     NO.endresult = 2
@@ -450,22 +454,27 @@ def GameOver_Scene():
         pygame.display.update() 
         Event = pygame.event.get()
         display_surface.blit(GameOver,(200,100))
-        BUTTONS.update()
         BUTTONS.draw(display_surface)
-        
+
         if YES.click(Event):
             active = False
-            pygame.quit()
-            restart()
+            main()
         #si on appuie sur 'No', on quitte le jeu    
         if NO.click(Event):
             active=False
-            pygame.quit()
+            print("Quit")
+            
+        BUTTONS.update()
+        for event in Event : 
+    
+            if event.type == pygame.QUIT :
+                continuer=False 
+        
+    pygame.quit()
+    
 
-def restart():
-    main()
-    GameOver_Scene()
 
 teste1.mainmenu()
-restart()
+main()
+
 
