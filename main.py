@@ -126,7 +126,7 @@ class Ennemie(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.topleft = self.x, self.y
-        #self.deplacement()
+        self.deplacement()
     def deplacement(self):
         if self.state==0:
             if self.x != 1000:
@@ -209,6 +209,7 @@ class Level(object):
             collide with the player. """
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
+        self.Door = pygame.sprite.Group()
         self.player = player
         
         # Background image
@@ -219,6 +220,7 @@ class Level(object):
         """ Update everything in this level."""
         self.platform_list.update()
         self.enemy_list.update()
+        self.Door.update()
  
     def draw(self):
         """ Draw everything on this level. """
@@ -227,12 +229,13 @@ class Level(object):
         # Draw all the sprite lists that we have
         self.platform_list.draw(Level.screen)
         self.enemy_list.draw(Level.screen)
+        self.Door.draw(Level.screen)
  
 # Create platforms for the level
 class Level_1(Level):
     """ Definition for level 1. """
  
-    def __init__(self,player,Door):
+    def __init__(self,player):
         """ Create level 1. """
         
         # Call the parent constructor
@@ -241,7 +244,7 @@ class Level_1(Level):
         self.platform_list = pygame.sprite.Group()
         cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
         cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
-        door = 'GRAPHISME\Cubes\door_orange.png'
+        
         # Array with width, height, x, and y of platform
         level = [[100, 100, 100, 810,cube1],
                  [100, 100, 0, 810,cube2],
@@ -254,7 +257,7 @@ class Level_1(Level):
                  ]
                 
                  
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],]
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
         
         # Go through the array above and add platforms
         
@@ -273,22 +276,29 @@ class Level_1(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-            
+        door = 'GRAPHISME\Cubes\door_orange.png'
+        Door_obj = Door(door)
+        Door_obj.x = 440
+        Door_obj.y = 360
+        self.Door.add(Door_obj)
             
     def update(self):
         """ Update everything in this level."""
         self.platform_list.update()
         self.enemy_list.update()
+        self.Door.update()
         
     def draw(self, screen):
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
+        self.Door.draw(screen)
 #variable qui reset le personnage et le replace au début 
+# Create platforms for the level
 class Level_2(Level):
     """ Definition for level 1. """
  
-    def __init__(self,player,Door):
+    def __init__(self,player):
         """ Create level 1. """
         
         # Call the parent constructor
@@ -329,20 +339,24 @@ class Level_2(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-            
+        door = 'GRAPHISME\Cubes\door_orange.png'
+        Door_obj = Door(door)
+        Door_obj.rect.x = 440
+        Door_obj.rect.y = 360
+        self.Door.add(Door_obj)
             
     def update(self):
         """ Update everything in this level."""
         self.platform_list.update()
         self.enemy_list.update()
+        self.Door.update()
         
     def draw(self, screen):
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
+        self.Door.draw(screen)
 #variable qui reset le personnage et le replace au début 
-
-
 def main():
     
     """ Main Program """
@@ -362,14 +376,15 @@ def main():
     SLIME_obj_image = pygame.image.load('GRAPHISME/bloobey-logo.png')
     SLIME_obj_size = (133,100)
     SLIME_obj = Player(SLIME_obj_image,SLIME_obj_size)
-    door = 'GRAPHISME\Cubes\door_orange.png'
-    Door_obj=Door(door)
+
+
     
 
     
     # Create all the levels
     level_list = []
-    level_list.append( Level_1(SLIME_obj,Door_obj),Level_1(SLIME_obj,Door_obj))
+    level_list.append( Level_1(SLIME_obj))
+    level_list.append(Level_2(SLIME_obj))
     
     # Set the current level
     current_level_now = 0
@@ -469,14 +484,7 @@ def main():
             
             
             active = False
-        collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
-        for Collision in collision_sprite:
-            
-            if current_level_now <= len(level_list):
-                current_level_now += 1
-            else:
-                False
             
         screen.blit(background,(0,0))
         active_sprite_list.draw(screen)
@@ -493,6 +501,16 @@ def main():
         if SLIME_obj.rect.y >= screen_height:
             print("dead")
             active = False
+        collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.Door, False)
+        
+        for Collision in collision_sprite:
+            
+            if current_level_now < len(level_list)-1:
+                current_level_now += 1
+                SLIME_obj.rect.x = coordone_SLIME_obj[0]
+                SLIME_obj.rect.y = coordone_SLIME_obj[1]
+            else:
+                active=False
     #fin du code et sortie de la fenêtre
     if Quit:
         print("quit")
