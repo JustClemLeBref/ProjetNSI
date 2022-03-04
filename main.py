@@ -77,9 +77,9 @@ class Player(pygame.sprite.Sprite):
             self.change_y += .25
  
         # See if we are on the ground.
-        if self.rect.y >= screen_height - self.rect.height + 300  and self.change_y >= 0: 
+        if self.rect.y >= screen_height +300 and self.change_y >= 0: 
             self.change_y = 0
-            self.rect.y = screen_height - self.rect.height+300
+            self.rect.y = screen_height +300
  
     def jump(self):
         """ Called when user hits 'jump' button. """
@@ -181,6 +181,23 @@ class Platform(pygame.sprite.Sprite):
  
         self.rect = self.image.get_rect()
         
+#classe pour les ennemies, ses stats
+class Door(pygame.sprite.Sprite):
+    def __init__(self,image):
+        super().__init__()
+        self.description = "default"
+        self.size = (150,150)
+        self.image = pygame.transform.scale(pygame.image.load(image), (self.size[0], self.size[1]))
+        self.original = self.image
+        self.original_flip = pygame.transform.flip(self.image, True, False)
+        self.x = 300
+        self.y = 640
+        self.rect = self.image.get_rect()
+        self.state = 0
+    
+    def update(self):
+        self.rect.topleft = self.x, self.y
+
 
 class Level(object):
     """ This is a generic super-class used to define a level.
@@ -215,7 +232,7 @@ class Level(object):
 class Level_1(Level):
     """ Definition for level 1. """
  
-    def __init__(self,player):
+    def __init__(self,player,Door):
         """ Create level 1. """
         
         # Call the parent constructor
@@ -237,7 +254,63 @@ class Level_1(Level):
                  ]
                 
                  
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],[door,(100, 100), (450, 410)],]
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],]
+        
+        # Go through the array above and add platforms
+        
+        for platform in level:
+            block = Platform(platform[0], platform[1],platform[4])
+            block.rect.x = platform[2]
+            block.rect.y = platform[3]
+            block.player = self.player
+            self.platform_list.add(block)
+        
+        # Go through the array above and add platforms
+        for ennemie in Monsters:
+            monstre = Ennemie(ennemie[0])
+            monstre.size = ennemie[1]
+            coordone_monstre = ennemie[2]
+            monstre.x = coordone_monstre[0]
+            monstre.y = coordone_monstre[1]
+            self.enemy_list.add(monstre)
+            
+            
+    def update(self):
+        """ Update everything in this level."""
+        self.platform_list.update()
+        self.enemy_list.update()
+        
+    def draw(self, screen):
+        # Draw all the sprite lists that we have
+        self.platform_list.draw(screen)
+        self.enemy_list.draw(screen)
+#variable qui reset le personnage et le replace au début 
+class Level_2(Level):
+    """ Definition for level 1. """
+ 
+    def __init__(self,player,Door):
+        """ Create level 1. """
+        
+        # Call the parent constructor
+        Level.__init__(self, player)
+        
+        self.platform_list = pygame.sprite.Group()
+        cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
+        cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
+        
+        # Array with width, height, x, and y of platform
+        level = [[100, 100, 100, 810,cube1],
+                 [100, 100, 0, 810,cube2],
+                 [100, 100, 500, 810,cube2],
+                 [100, 100, 600, 810,cube1],
+                 [100, 100, 900, 710,cube2],
+                 [100, 100, 1000, 710,cube1],
+                 [100, 100, 400, 510,cube2],
+                 [100, 100, 500, 510,cube1],
+                 ]
+                
+                 
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],]
         
         # Go through the array above and add platforms
         
@@ -270,7 +343,6 @@ class Level_1(Level):
 #variable qui reset le personnage et le replace au début 
 
 
-
 def main():
     
     """ Main Program """
@@ -290,22 +362,20 @@ def main():
     SLIME_obj_image = pygame.image.load('GRAPHISME/bloobey-logo.png')
     SLIME_obj_size = (133,100)
     SLIME_obj = Player(SLIME_obj_image,SLIME_obj_size)
+    door = 'GRAPHISME\Cubes\door_orange.png'
+    Door_obj=Door(door)
     
 
     
     # Create all the levels
     level_list = []
-    level_list.append( Level_1(SLIME_obj) )
+    level_list.append( Level_1(SLIME_obj,Door_obj),Level_1(SLIME_obj,Door_obj))
     
     # Set the current level
     current_level_now = 0
-    current_level = level_list[current_level_now]
+
     
-    active_sprite_list = pygame.sprite.Group()
-    SLIME_obj.level = current_level
-    active_sprite_list.add(SLIME_obj)
-    
-    coordone_SLIME_obj=(100,screen_height - 200)
+    coordone_SLIME_obj=(100,screen_height - 300)
     SLIME_obj.rect.x = coordone_SLIME_obj[0]
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
     
@@ -323,7 +393,11 @@ def main():
 
     
     while active:
+        current_level = level_list[current_level_now]
         
+        active_sprite_list = pygame.sprite.Group()
+        SLIME_obj.level = current_level
+        active_sprite_list.add(SLIME_obj)
         event_list = pygame.event.get()
         
         
@@ -395,8 +469,15 @@ def main():
             
             
             active = False
+        collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
-        
+        for Collision in collision_sprite:
+            
+            if current_level_now <= len(level_list):
+                current_level_now += 1
+            else:
+                False
+            
         screen.blit(background,(0,0))
         active_sprite_list.draw(screen)
         current_level.draw(screen)
@@ -409,8 +490,8 @@ def main():
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
         
-        if SLIME_obj.rect.y <= screen_height:
-            
+        if SLIME_obj.rect.y >= screen_height:
+            print("dead")
             active = False
     #fin du code et sortie de la fenêtre
     if Quit:
