@@ -239,33 +239,44 @@ class Level_1(Level):
         
         Level.__init__(self, player)
         
+        # Call the parent constructor
+        Level.__init__(self, player)
+        player=player
         self.platform_list = pygame.sprite.Group()
-        cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
-        cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
+        cube1 = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
+        cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
+        # Array with width, height, x, and y of platform
+        level=[
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
+        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+        size=100
+        height=0
         
-        #Liste du niveau, avec les coordonnées et les types de chaque blocks du niveau
-        level = [[100, 100, 100, 810,cube1],
-                 [100, 100, 0, 810,cube2],
-                 [100, 100, 500, 810,cube2],
-                 [100, 100, 600, 810,cube1],
-                 [100, 100, 900, 710,cube2],
-                 [100, 100, 1000, 710,cube1],
-                 [100, 100, 400, 510,cube2],
-                 [100, 100, 500, 510,cube1],
-                 ]
+        for line in level:
+            height+=size
+            print(height)
+            length=0
+            for object in line:
+                print(object)
+                if object == 1:
+                    print(length)
+                    block = Platform(size, size,cube1)
+                    block.rect.x = length
+                    block.rect.y = height
+                    block.player = self.player
+                    self.platform_list.add(block)
+                length+=size
                 
-                 
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
         
-        # On place les différents blocks dans le niveau 
-        # en fonctions de leurs chiffres attribués et de leur position dans la liste
-        
-        for platform in level:
-            block = Platform(platform[0], platform[1],platform[4])
-            block.rect.x = platform[2]
-            block.rect.y = platform[3]
-            block.player = self.player
-            self.platform_list.add(block)
         
         #On place les ennemis
         for ennemie in Monsters:
@@ -275,7 +286,7 @@ class Level_1(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-        door = 'GRAPHISME\Cubes\door_orange.png'
+        door = 'GRAPHISME\\Fruit.png'
         Door_obj = Door(door)
         Door_obj.x = 440
         Door_obj.y = 360
@@ -302,8 +313,8 @@ class Level_2(Level):
         Level.__init__(self, player)
         
         self.platform_list = pygame.sprite.Group()
-        cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
-        cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
+        cube1 = 'GRAPHISME/Cubes2/SCubeShortD4.png'
+        cube2 = 'GRAPHISME/Cubes2/SCubeLongD1.png'
         
         # Liste du niveau, avec les coordonnées et les types de chaque blocks du niveau
         level = [[100, 100, 100, 810,cube1],
@@ -337,7 +348,7 @@ class Level_2(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-        door = 'GRAPHISME\Cubes\door_orange.png'
+        door = 'GRAPHISME\\Fruit.png'
         Door_obj = Door(door)
         Door_obj.rect.x = 440
         Door_obj.rect.y = 360
@@ -402,7 +413,7 @@ def main():
     clock = pygame.time.Clock()
     Quit = True
     active = True
-    
+    moved = 0
 
     
     while active:
@@ -414,12 +425,12 @@ def main():
         event_list = pygame.event.get()
         
         
-        
+        """
         if SLIME_obj.rect.x != ancien:
             print(SLIME_obj.rect.x)
             print(SLIME_obj.rect.y)
         ancien=SLIME_obj.rect.x
-        
+        """
         for event in event_list:
             
             if event.type == pygame.QUIT:
@@ -458,6 +469,35 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
+
+        
+        if SLIME_obj.rect.x >= 2*screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for plat in current_level.platform_list:
+                    for door in current_level.Door:
+                        for ennemie in current_level.enemy_list:
+                            if SLIME_obj.change_x > 0:
+                                plat.rect.x -= SLIME_obj.change_x
+                                door.rect.x -= SLIME_obj.change_x
+                                ennemie.rect.x -= SLIME_obj.change_x
+                                moved -= SLIME_obj.change_x
+                                print(moved)
+        
+        if SLIME_obj.rect.x <= screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for plat in current_level.platform_list:
+                    for door in current_level.Door:
+                        for ennemie in current_level.enemy_list:
+                            if SLIME_obj.change_x < 0:
+                                if moved == 0:
+                                    break
+                                plat.rect.x -= SLIME_obj.change_x
+                                door.rect.x -= SLIME_obj.change_x
+                                ennemie.rect.x -= SLIME_obj.change_x
+                                moved -= SLIME_obj.change_x
+                                print(moved)
+                        
+        ancien=SLIME_obj.rect.x
 
         #On met à jour les objets du niveau
         current_level.update()
@@ -538,12 +578,12 @@ def GameOver_Scene():
     coordone_YES=(400,650)
     YES.x = coordone_YES[0]
     YES.y = coordone_YES[1]
-    YES.endresult = 0
+
     
     NO = BUTTON(image_NO)
     NO.x = YES.x + 450
     NO.y = YES.y
-    NO.endresult = 2
+
     
     BUTTONS = pygame.sprite.Group(YES, NO)
     
