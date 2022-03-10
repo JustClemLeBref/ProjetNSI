@@ -62,48 +62,50 @@ class Player(pygame.sprite.Sprite):
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
  
-            # Stop our vertical movement
+            #Si il y a une collision, on arrete le mouvement vers le haut ou le bas
             self.change_y = 0
         
         
-        
+    #Fonction pour calculer la gravité appliqué au joueur ou au monstre  
     def calc_grav(self):
-        """ Calculate effect of gravity. """
+       
         if self.change_y == 0:
             self.change_y = 1
         else:
             self.change_y += .25
  
-        # See if we are on the ground.
+        #Condition pour voir si le joueur se situe au sol ou non
         if self.rect.y >= screen_height +300 and self.change_y >= 0: 
             self.change_y = 0
             self.rect.y = screen_height +300
  
+#Fonction pour le saut du joueur
     def jump(self):
-        """ Called when user hits 'jump' button. """
+       
  
-        # move down a bit and see if there is a platform below us.
-        # Move down 2 pixels because it doesn't work well if we only move down
-        # 1 when working with a platform moving down.
+        #On vérifie les collions aux alentours du joueur
         self.rect.y += 2
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         self.rect.y -= 2
  
-        # If it is ok to jump, set our speed upwards
+        # Si le saut est possible, le joueur saute
         if len(platform_hit_list) > 0 or self.rect.bottom >= screen_height:
             self.change_y = -10
  
-    # Player-controlled movement:
+    # Controles du saut:
+     #Flèche gauche
     def go_left(self):
-        """ Called when the user hits the left arrow. """
+        #Flèche gauche
         self.change_x = -6
  
+    #Flèche droite
     def go_right(self):
-        """ Called when the user hits the right arrow. """
+       
         self.change_x = 6
  
+    #si le joueur arrête d'appuyer sur une touche
     def stop(self):
-        """ Called when the user lets off the keyboard. """
+        
         self.change_x = 0
  
             
@@ -139,7 +141,7 @@ class Ennemie(pygame.sprite.Sprite):
             else:
                 self.state = 0
 
-
+#Classe du bouton clickable (valable pour plusieurs boutons)
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -163,8 +165,10 @@ class BUTTON(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
         
+        
+ #Class de La Platforme où Bloobey saute       
 class Platform(pygame.sprite.Sprite):
-    #La Platforme où Bloobey saute 
+    
  
     def __init__(self, width, height,image):
         super().__init__()
@@ -179,7 +183,7 @@ class Platform(pygame.sprite.Sprite):
  
         self.rect = self.image.get_rect()
         
-#classe pour les ennemies, ses stats
+#classe pour les Portes de fin de niveau
 class Door(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
@@ -196,35 +200,32 @@ class Door(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
 
-
+#Classe du Niveau 
 class Level(object):
-    """ This is a generic super-class used to define a level.
-        Create a child class for each level with level-specific
-        info. """
+    
  
     def __init__(self, player):
-        """ Constructor. Pass in a handle to player. Needed for when moving platforms
-            collide with the player. """
+        #Les collisions avec le joueur sont indispensables
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.Door = pygame.sprite.Group()
         self.player = player
         
-        # Background image
+        #Background
         self.background = None
  
-    # Update everythign on this level
+    # On met à jour le niveau 
     def update(self):
-        """ Update everything in this level."""
+       
         self.platform_list.update()
         self.enemy_list.update()
         self.Door.update()
- 
+    #Fonction pour ajouter le niveau à l'écran 
     def draw(self):
-        """ Draw everything on this level. """
+        
  
         
-        # Draw all the sprite lists that we have
+        # On ajoute tout à l'écran 
         self.platform_list.draw(Level.screen)
         self.enemy_list.draw(Level.screen)
         self.Door.draw(Level.screen)
