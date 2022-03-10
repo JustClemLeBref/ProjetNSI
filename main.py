@@ -10,9 +10,9 @@ screen_height = 1000
 #on ajoute en plus
 clock = pygame.time.Clock()
 
-GREEN = (255, 255, 255)
-red = (255, 0, 0)
-black = (0, 0, 0)
+Vert = (255, 255, 255)
+rouge = (255, 0, 0)
+noir = (0, 0, 0)
 
 #classe du joueur, ses stats
 class Player(pygame.sprite.Sprite):
@@ -24,37 +24,35 @@ class Player(pygame.sprite.Sprite):
         self.original_flip = pygame.transform.flip(self.image, True, False)
         self.rect = self.image.get_rect()
         
-        # Set speed vector of player
+        # On définit le vecteur vitesse du joueur
         self.change_x = 0
         self.change_y = 0 
         
-        # List of sprites we can bump against
+        # Liste des sprites dans lesquels on peut rentrer dedans 
         self.level = None
 
-
+        #Fonction pour mettre le joueur a jour apres chaque action
     def update(self):
         self.calc_grav()
         self.rect.topleft = self.rect.x, self.rect.y
-        # Move left/right
-        self.rect.x += self.change_x
+        self.rect.x += self.change_x  # Pour bouger de droite à gauche 
         
  
-        # See if we hit anything
+        #Variable pour repérer les collisions avec pygame
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         
         for block in block_hit_list:
-            # If we are moving right,
-            # set our right side to the left side of the item we hit
+            #Si le joueur va à droite, on place sa droite à gauche de l'objet qu'il touche
             if self.change_x > 0:
                 self.rect.right = block.rect.left
             elif self.change_x < 0:
-                # Otherwise if we are moving left, do the opposite.
+                # Si le joueur va à gauche, on fait l'inverse
                 self.rect.left = block.rect.right
  
-        # Move up/down
+        #Variable pour bouger de haut en bas
         self.rect.y += self.change_y
         
-        # Check and see if we hit anything
+       
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
  
@@ -177,7 +175,7 @@ class Platform(pygame.sprite.Sprite):
         self.image = pygame.Surface([width, height])
         #self.image = pygame.image.load(image)
         self.image = pygame.transform.scale(pygame.image.load(image), (width, height))
-        #self.image.fill(GREEN)
+        #self.image.fill(Vert)
  
         self.rect = self.image.get_rect()
         
@@ -231,21 +229,21 @@ class Level(object):
         self.enemy_list.draw(Level.screen)
         self.Door.draw(Level.screen)
  
-# Create platforms for the level
+#On crée les plateformes du niveau
 class Level_1(Level):
-    """ Definition for level 1. """
+    #Niveau 1
  
     def __init__(self,player):
-        """ Create level 1. """
+        #Niveau 1 
         
-        # Call the parent constructor
+        
         Level.__init__(self, player)
         
         self.platform_list = pygame.sprite.Group()
         cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
         cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
         
-        # Array with width, height, x, and y of platform
+        #Liste du niveau, avec les coordonnées et les types de chaque blocks du niveau
         level = [[100, 100, 100, 810,cube1],
                  [100, 100, 0, 810,cube2],
                  [100, 100, 500, 810,cube2],
@@ -259,7 +257,8 @@ class Level_1(Level):
                  
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
         
-        # Go through the array above and add platforms
+        # On place les différents blocks dans le niveau 
+        # en fonctions de leurs chiffres attribués et de leur position dans la liste
         
         for platform in level:
             block = Platform(platform[0], platform[1],platform[4])
@@ -268,7 +267,7 @@ class Level_1(Level):
             block.player = self.player
             self.platform_list.add(block)
         
-        # Go through the array above and add platforms
+        #On place les ennemis
         for ennemie in Monsters:
             monstre = Ennemie(ennemie[0])
             monstre.size = ennemie[1]
@@ -283,32 +282,30 @@ class Level_1(Level):
         self.Door.add(Door_obj)
             
     def update(self):
-        """ Update everything in this level."""
+        #on update tout les objets, niveaux et entités créées
         self.platform_list.update()
         self.enemy_list.update()
         self.Door.update()
         
     def draw(self, screen):
-        # Draw all the sprite lists that we have
+        # On place tout les objets, niveaux et entités créées
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
         self.Door.draw(screen)
-#variable qui reset le personnage et le replace au début 
-# Create platforms for the level
+ 
+
 class Level_2(Level):
-    """ Definition for level 1. """
+    #On définit le niveau 2
  
     def __init__(self,player):
-        """ Create level 1. """
-        
-        # Call the parent constructor
+   
         Level.__init__(self, player)
         
         self.platform_list = pygame.sprite.Group()
         cube1 = 'GRAPHISME\Cubes\SCubeShortD4.png'
         cube2 = 'GRAPHISME\Cubes\SCubeLongD1.png'
         
-        # Array with width, height, x, and y of platform
+        # Liste du niveau, avec les coordonnées et les types de chaque blocks du niveau
         level = [[100, 100, 100, 810,cube1],
                  [100, 100, 0, 810,cube2],
                  [100, 100, 500, 810,cube2],
@@ -322,7 +319,8 @@ class Level_2(Level):
                  
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],]
         
-        # Go through the array above and add platforms
+        # On place les différents blocks dans le niveau 
+        # en fonctions de leurs chiffres attribués et de leur position dans la liste
         
         for platform in level:
             block = Platform(platform[0], platform[1],platform[4])
@@ -331,7 +329,7 @@ class Level_2(Level):
             block.player = self.player
             self.platform_list.add(block)
         
-        # Go through the array above and add platforms
+        #On place les ennemis sur le niveau
         for ennemie in Monsters:
             monstre = Ennemie(ennemie[0])
             monstre.size = ennemie[1]
@@ -346,20 +344,20 @@ class Level_2(Level):
         self.Door.add(Door_obj)
             
     def update(self):
-        """ Update everything in this level."""
+        #On met à jour tout les objets, niveaux et entités créées
         self.platform_list.update()
         self.enemy_list.update()
         self.Door.update()
         
     def draw(self, screen):
-        # Draw all the sprite lists that we have
+        # cette fonction 'dessine' ou place tout les objets, niveaux et entités créées
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
         self.Door.draw(screen)
-#variable qui reset le personnage et le replace au début 
+
 def main():
     
-    """ Main Program """
+    #fonction principale du jeu 
     pygame.init()
     
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -381,12 +379,12 @@ def main():
     
 
     
-    # Create all the levels
+    # On crée tout les niveaux
     level_list = []
     level_list.append( Level_1(SLIME_obj))
     level_list.append(Level_2(SLIME_obj))
     
-    # Set the current level
+    #On place le premier niveau en premier
     current_level_now = 0
 
     
@@ -400,7 +398,7 @@ def main():
     ancien=SLIME_obj.rect.x
     hearts=1 
     
-    # Used to manage how fast the screen updates
+    #Variables pour gérer la vitesse de msie à jour de l'écran
     clock = pygame.time.Clock()
     Quit = True
     active = True
@@ -432,7 +430,7 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     print('You Pressed ECHAP Key!')
                     active = False
-            
+            #variables pour les touches du clavier qui interagissent avec le jeu, et leurs effets
             if event.type == pygame.KEYDOWN:
                  
                 if event.key == pygame.K_RIGHT:
@@ -460,24 +458,25 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
-            """
-        """
-        # Update items in the level
+
+        #On met à jour les objets du niveau
         current_level.update()
         active_sprite_list.update()
     
     
                     
-        # If the player gets near the right side, shift the world left (-x)
+        #Si le joueur va trop à droite,
+        #il ne peut plus avancer plus à droite mais l'écran bouge à la même vitesse
+        #pour simuler une caméra qui suit le joueur
         if SLIME_obj.rect.right > screen_width:
             SLIME_obj.rect.right = screen_width
  
-        # If the player gets near the left side, shift the world right (+x)
+        #Pareil mais pour la gauche
         if SLIME_obj.rect.left < 0:
             SLIME_obj.rect.left = 0
         
 
-        #recherche de collision
+        #On cherche des collisions avec pygame
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
         for Collision in collision_sprite:
@@ -491,11 +490,11 @@ def main():
         current_level.draw(screen)
         
 
-        # Limit to 60 frames per second
+        #60 imgaes par seconde maximum
         
         clock.tick(60)
         
-        # Go ahead and update the screen with what we've drawn.
+        #On met à jour l'écran après chaque actions du jeu
         pygame.display.flip()
         
         if SLIME_obj.rect.y >= screen_height:
