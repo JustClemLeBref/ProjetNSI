@@ -1,6 +1,7 @@
 
 #importation des modules nécessaires
 import pygame
+from pygame import mixer
 import teste1
 
 #dimension de la fenetre
@@ -248,17 +249,20 @@ class Level_1(Level):
         cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
         # Array with width, height, x, and y of platform
         level=[
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
-        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
-        size=100
+        size=75
         height=0
         
         for line in level:
@@ -274,6 +278,13 @@ class Level_1(Level):
                     block.rect.y = height
                     block.player = self.player
                     self.platform_list.add(block)
+                if object == 2:
+                    door = 'GRAPHISME\\Fruit.png'
+                    Door_obj = Door(door)
+                    Door_obj.x = length
+                    Door_obj.y = height
+                    self.Door.add(Door_obj)
+                    
                 length+=size
                 
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
@@ -287,11 +298,7 @@ class Level_1(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-        door = 'GRAPHISME\\Fruit.png'
-        Door_obj = Door(door)
-        Door_obj.x = 440
-        Door_obj.y = 360
-        self.Door.add(Door_obj)
+
             
     def update(self):
         #on update tout les objets, niveaux et entités créées
@@ -313,35 +320,56 @@ class Level_2(Level):
    
         Level.__init__(self, player)
         
+        # Call the parent constructor
+        Level.__init__(self, player)
+        player=player
         self.platform_list = pygame.sprite.Group()
-        cube1 = 'GRAPHISME/Cubes2/SCubeShortD4.png'
-        cube2 = 'GRAPHISME/Cubes2/SCubeLongD1.png'
+        cube1 = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
+        cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
+        # Array with width, height, x, and y of platform
+        level=[
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+        size=75
+        height=0
         
-        # Liste du niveau, avec les coordonnées et les types de chaque blocks du niveau
-        level = [[100, 100, 100, 810,cube1],
-                 [100, 100, 0, 810,cube2],
-                 [100, 100, 500, 810,cube2],
-                 [100, 100, 600, 810,cube1],
-                 [100, 100, 900, 710,cube2],
-                 [100, 100, 1000, 710,cube1],
-                 [100, 100, 400, 510,cube2],
-                 [100, 100, 500, 510,cube1],
-                 ]
+        for line in level:
+            height+=size
+            print(height)
+            length=0
+            for object in line:
+                print(object)
+                if object == 1:
+                    print(length)
+                    block = Platform(size, size,cube1)
+                    block.rect.x = length
+                    block.rect.y = height
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 2:
+                    door = 'GRAPHISME\\Fruit.png'
+                    Door_obj = Door(door)
+                    Door_obj.x = length
+                    Door_obj.y = height
+                    self.Door.add(Door_obj)
+                    
+                length+=size
                 
-                 
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,500)],]
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
         
-        # On place les différents blocks dans le niveau 
-        # en fonctions de leurs chiffres attribués et de leur position dans la liste
         
-        for platform in level:
-            block = Platform(platform[0], platform[1],platform[4])
-            block.rect.x = platform[2]
-            block.rect.y = platform[3]
-            block.player = self.player
-            self.platform_list.add(block)
-        
-        #On place les ennemis sur le niveau
+        #On place les ennemis
         for ennemie in Monsters:
             monstre = Ennemie(ennemie[0])
             monstre.size = ennemie[1]
@@ -349,11 +377,6 @@ class Level_2(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
-        door = 'GRAPHISME\\Fruit.png'
-        Door_obj = Door(door)
-        Door_obj.rect.x = 440
-        Door_obj.rect.y = 360
-        self.Door.add(Door_obj)
             
     def update(self):
         #On met à jour tout les objets, niveaux et entités créées
@@ -384,11 +407,14 @@ def main():
     
     #Bloobey, apparition sur l'écran      
     SLIME_obj_image = pygame.image.load('GRAPHISME/bloobey-logo.png')
-    SLIME_obj_size = (133,100)
+    SLIME_obj_size = (100,66)
     SLIME_obj = Player(SLIME_obj_image,SLIME_obj_size)
 
 
-    
+    #def de la musique
+    pygame.mixer.init()
+    pygame.mixer.music.load('.\\main_screen_images\\musique_fort_boyard.ogg')
+    pygame.mixer.music.play()
 
     
     # On crée tout les niveaux
@@ -475,29 +501,40 @@ def main():
         if SLIME_obj.rect.x >= 2*screen_width/3:
             if SLIME_obj.rect.x != ancien:
                 for plat in current_level.platform_list:
-                    for door in current_level.Door:
-                        for ennemie in current_level.enemy_list:
-                            if SLIME_obj.change_x > 0:
-                                plat.rect.x -= SLIME_obj.change_x
-                                door.rect.x -= SLIME_obj.change_x
-                                ennemie.rect.x -= SLIME_obj.change_x
-                                moved -= SLIME_obj.change_x
-                                print(moved)
-        
+                    if SLIME_obj.change_x > 0:
+                        plat.rect.x -= SLIME_obj.change_x
+                        moved -= SLIME_obj.change_x
+                        print(moved)
+        if SLIME_obj.rect.x >= 2*screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for door in current_level.Door:
+                    if SLIME_obj.change_x > 0:
+                        door.x -= SLIME_obj.change_x
+                        
+        if SLIME_obj.rect.x >= 2*screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for ennemie in current_level.enemy_list:
+                    if SLIME_obj.change_x > 0:
+                        ennemie.rect.x -= SLIME_obj.change_x
         if SLIME_obj.rect.x <= screen_width/3:
             if SLIME_obj.rect.x != ancien:
                 for plat in current_level.platform_list:
-                    for door in current_level.Door:
-                        for ennemie in current_level.enemy_list:
-                            if SLIME_obj.change_x < 0:
-                                if moved == 0:
-                                    break
-                                plat.rect.x -= SLIME_obj.change_x
-                                door.rect.x -= SLIME_obj.change_x
-                                ennemie.rect.x -= SLIME_obj.change_x
-                                moved -= SLIME_obj.change_x
-                                print(moved)
+                    if SLIME_obj.change_x < 0:
+                        plat.rect.x -= SLIME_obj.change_x
+                        moved -= SLIME_obj.change_x
+                        print(moved)
+        if SLIME_obj.rect.x <= screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for door in current_level.Door:
+                    if SLIME_obj.change_x < 0:
+                        door.x -= SLIME_obj.change_x
                         
+        if SLIME_obj.rect.x <= screen_width/3:
+            if SLIME_obj.rect.x != ancien:
+                for ennemie in current_level.enemy_list:
+                    if SLIME_obj.change_x < 0:
+                        ennemie.rect.x -= SLIME_obj.change_x               
+  
         ancien=SLIME_obj.rect.x
 
         #On met à jour les objets du niveau
@@ -558,18 +595,7 @@ def main():
     else:
         pygame.quit()
     
-def Pub():
-    display_surface =  pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption('Pub')
-    
-    Pub1 = 'GRAPHISME/pub.png'
-    pub2 = 'GRAPHISME/pub_BWM.png'
-    skip = 'GRAPHISME/Skip-Ad.png'
-    
-    random = randint(1,2)
-    if random == 1:
-        pub= pygame.image.load(Pub1)
-        pub= pygame.transform.scale(pub, (1000,1000))
+
 
 
 def GameOver_Scene():
