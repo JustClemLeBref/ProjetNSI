@@ -558,7 +558,18 @@ def main():
     else:
         pygame.quit()
     
-
+def Pub():
+    display_surface =  pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption('Pub')
+    
+    Pub1 = 'GRAPHISME/pub.png'
+    pub2 = 'GRAPHISME/pub_BWM.png'
+    skip = 'GRAPHISME/Skip-Ad.png'
+    
+    random = randint(1,2)
+    if random == 1:
+        pub= pygame.image.load(Pub1)
+        pub= pygame.transform.scale(pub, (1000,1000))
 
 
 def GameOver_Scene():
