@@ -590,8 +590,8 @@ def main():
                 active=False
     #fin du code et sortie de la fenêtre
     if Quit:
-        print("quit")
-        GameOver_Scene()
+        
+        Pub()
     else:
         pygame.quit()
     
@@ -603,39 +603,42 @@ def Pub():
     Pub2 = 'GRAPHISME/pub_BWM.png'
     skip_image = 'GRAPHISME/Skip_Ad.png'
     
+    
+    
     random_int = random.randint(1,2)
     if random_int == 1:
         pub= pygame.image.load(Pub1)
-        pub= pygame.transform.scale(pub, (1000,1000))
+        pub= pygame.transform.scale(pub, (1500,1000))
         
-        skip = BUTTON(skip_image)
-        coordone_skip = (900, 800)
+        skip = BUTTON(skip_image,)
+        coordone_skip = (1100, 900)
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
     
     elif random_int == 2:
         pub= pygame.image.load(Pub2)
-        pub= pygame.transform.scale(pub, (1000,1000))
+        pub= pygame.transform.scale(pub, (1500,1000))
         
-        skip = BUTTON(skip_image)
-        coordone_skip = (900, 800)
+        skip = BUTTON(skip_image,)
+        coordone_skip = (1400, 800)
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
-        
-     
+    
+    BUTTONS = pygame.sprite.GroupSingle(skip)
+    
     
     active = True
     while active:
         pygame.display.update()
         Event = pygame.event.get()
-        display_surface.blit(Pub,(200,100))
-        BUTTON.draw(display_surface)
+        display_surface.blit(pub,(0,0))
+        BUTTONS.draw(display_surface)
         
         if skip.click(Event):
             active = False
             GameOver_Scene()
-
-
+        BUTTONS.update()
+        
 def GameOver_Scene():
     
     display_surface = pygame.display.set_mode((screen_width, screen_height))
