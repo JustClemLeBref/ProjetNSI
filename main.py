@@ -601,22 +601,32 @@ def Pub():
     
     Pub1 = 'GRAPHISME/pub.png'
     Pub2 = 'GRAPHISME/pub_BWM.png'
+    Pub3 = 'GRAPHISME/Pub_Yphone.png'
     skip_image = 'GRAPHISME/Skip_Ad.png'
     
     
     
-    random_int = random.randint(1,2)
+    random_int = random.randint(1,3)
     if random_int == 1:
         pub= pygame.image.load(Pub1)
         pub= pygame.transform.scale(pub, (1500,1000))
         
         skip = BUTTON(skip_image,)
-        coordone_skip = (1100, 900)
+        coordone_skip = (1400, 800)
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
     
     elif random_int == 2:
         pub= pygame.image.load(Pub2)
+        pub= pygame.transform.scale(pub, (1500,1000))
+        
+        skip = BUTTON(skip_image,)
+        coordone_skip = (1400, 800)
+        skip.x = coordone_skip[0]
+        skip.y = coordone_skip[1]
+       
+    elif random_int == 3:
+        pub= pygame.image.load(Pub3)
         pub= pygame.transform.scale(pub, (1500,1000))
         
         skip = BUTTON(skip_image,)
