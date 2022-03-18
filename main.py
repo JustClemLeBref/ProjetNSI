@@ -2,6 +2,7 @@
 #importation des modules nécessaires
 import pygame
 from pygame import mixer
+import random
 import teste1
 
 #dimension de la fenetre
@@ -124,20 +125,23 @@ class Ennemie(pygame.sprite.Sprite):
         self.y = 640
         self.rect = self.image.get_rect()
         self.state = 0
+        self.nombre_de_boucle = 0
     
     def update(self):
         self.rect.topleft = self.x, self.y
         self.deplacement()
     def deplacement(self):
         if self.state==0:
-            if self.x != 1000:
+            if self.nombre_de_boucle != 100:
+                self.nombre_de_boucle += 1
                 self.x += 10
                 self.image=self.original
             else:
                 self.state = 1
         if self.state == 1:
-            if self.x!=-10:
+            if self.nombre_de_boucle!=-10:
                 self.x -= 10
+                self.nombre_de_boucle += -1
                 self.image = self.original_flip
             else:
                 self.state = 0
@@ -331,14 +335,14 @@ class Level_2(Level):
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
         [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
         size=75
@@ -503,38 +507,28 @@ def main():
                 for plat in current_level.platform_list:
                     if SLIME_obj.change_x > 0:
                         plat.rect.x -= SLIME_obj.change_x
-                        moved -= SLIME_obj.change_x
-                        print(moved)
-        if SLIME_obj.rect.x >= 2*screen_width/3:
-            if SLIME_obj.rect.x != ancien:
                 for door in current_level.Door:
                     if SLIME_obj.change_x > 0:
                         door.x -= SLIME_obj.change_x
-                        
-        if SLIME_obj.rect.x >= 2*screen_width/3:
-            if SLIME_obj.rect.x != ancien:
                 for ennemie in current_level.enemy_list:
                     if SLIME_obj.change_x > 0:
                         ennemie.rect.x -= SLIME_obj.change_x
-        if SLIME_obj.rect.x <= screen_width/3:
-            if SLIME_obj.rect.x != ancien:
-                for plat in current_level.platform_list:
-                    if SLIME_obj.change_x < 0:
-                        plat.rect.x -= SLIME_obj.change_x
-                        moved -= SLIME_obj.change_x
-                        print(moved)
-        if SLIME_obj.rect.x <= screen_width/3:
-            if SLIME_obj.rect.x != ancien:
-                for door in current_level.Door:
-                    if SLIME_obj.change_x < 0:
-                        door.x -= SLIME_obj.change_x
-                        
-        if SLIME_obj.rect.x <= screen_width/3:
-            if SLIME_obj.rect.x != ancien:
-                for ennemie in current_level.enemy_list:
-                    if SLIME_obj.change_x < 0:
-                        ennemie.rect.x -= SLIME_obj.change_x               
-  
+        if moved==1:
+            if SLIME_obj.rect.x <= screen_width/3:
+                if SLIME_obj.rect.x != ancien:
+                    for plat in current_level.platform_list:
+                        if SLIME_obj.change_x < 0:
+                            plat.rect.x -= SLIME_obj.change_x
+                    for door in current_level.Door:
+                        if SLIME_obj.change_x < 0:
+                            door.x -= SLIME_obj.change_x
+                    for ennemie in current_level.enemy_list:
+                        if SLIME_obj.change_x < 0:
+                            ennemie.rect.x -= SLIME_obj.change_x               
+        if SLIME_obj.rect.x >= screen_width/3:
+            moved = 1
+        else:
+            moved = 0
         ancien=SLIME_obj.rect.x
 
         #On met à jour les objets du niveau
@@ -590,8 +584,9 @@ def main():
                 active=False
     #fin du code et sortie de la fenêtre
     if Quit:
-        
+        print("quit")
         Pub()
+        GameOver_Scene()
     else:
         pygame.quit()
     
@@ -649,6 +644,9 @@ def Pub():
             GameOver_Scene()
         BUTTONS.update()
         
+
+
+
 def GameOver_Scene():
     
     display_surface = pygame.display.set_mode((screen_width, screen_height))
