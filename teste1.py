@@ -32,7 +32,7 @@ def mainmenu():
     white = (255, 255, 255) 
     
     X = 1400
-    Y = 2500
+    Y = 1000
     
     display_surface = pygame.display.set_mode((X, Y )) 
     
