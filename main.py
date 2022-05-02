@@ -21,9 +21,22 @@ class Player(pygame.sprite.Sprite):
     def __init__(self,image,size):
         super().__init__()
         self.description = "default"
-        self.image = pygame.transform.scale(image, (size[0], size[1]))
-        self.original = self.image
-        self.original_flip = pygame.transform.flip(self.image, True, False)
+        self.sprites = []
+        self.sprites_flip = []
+        self.is_animating = False
+        for i in range(1,9):
+            image="GRAPHISME\\Bloobey-anim\\idle\\BLOOBEY-logo(idle){}.png".format(i)
+            image=pygame.image.load(image)
+            self.image = pygame.transform.scale(image, (size[0], size[1]))
+            self.original = self.image
+            self.original_flip = pygame.transform.flip(self.image, True, False)
+            self.sprites.append(self.original)
+            self.sprites_flip.append(self.original_flip)
+        
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+        
+        
         self.rect = self.image.get_rect()
         
         # On définit le vecteur vitesse du joueur
@@ -39,7 +52,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += self.change_x  # Pour bouger de droite à gauche 
         
- 
+
         #Variable pour repérer les collisions avec pygame
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         
@@ -67,14 +80,24 @@ class Player(pygame.sprite.Sprite):
             #Si il y a une collision, on arrete le mouvement vers le haut ou le bas
             self.change_y = 0
         
-        
+        if self.is_animating == True:
+            self.current_sprite += 0.2
+            if self.current_sprite >= len(self.sprites):
+                self.current_sprite = 0
+                
+            
+            self.image = self.sprites[int(self.current_sprite)]
+    
+    def animate(self):
+        self.is_animating = True
+    
     #Fonction pour calculer la gravité appliqué au joueur ou au monstre  
     def calc_grav(self):
        
         if self.change_y == 0:
             self.change_y = 1
         else:
-            self.change_y += .25
+            self.change_y += .5
  
         #Condition pour voir si le joueur se situe au sol ou non
         if self.rect.y >= screen_height +300 and self.change_y >= 0: 
@@ -129,22 +152,6 @@ class Ennemie(pygame.sprite.Sprite):
     
     def update(self):
         self.rect.topleft = self.x, self.y
-        self.deplacement()
-    def deplacement(self):
-        if self.state==0:
-            if self.nombre_de_boucle != 100:
-                self.nombre_de_boucle += 1
-                self.x += 10
-                self.image=self.original
-            else:
-                self.state = 1
-        if self.state == 1:
-            if self.nombre_de_boucle!=-10:
-                self.x -= 10
-                self.nombre_de_boucle += -1
-                self.image = self.original_flip
-            else:
-                self.state = 0
 
 #Classe du bouton clickable (valable pour plusieurs boutons)
 class BUTTON(pygame.sprite.Sprite):
@@ -250,6 +257,7 @@ class Level_1(Level):
         player=player
         self.platform_list = pygame.sprite.Group()
         cube1 = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
+        Spikes = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
         cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
         # Array with width, height, x, and y of platform
         level=[
@@ -282,6 +290,12 @@ class Level_1(Level):
                     block.rect.y = height
                     block.player = self.player
                     self.platform_list.add(block)
+                if object == 2:
+                    door = 'GRAPHISME\\Fruit.png'
+                    Door_obj = Door(door)
+                    Door_obj.x = length
+                    Door_obj.y = height
+                    self.Door.add(Door_obj)
                 if object == 2:
                     door = 'GRAPHISME\\Fruit.png'
                     Door_obj = Door(door)
@@ -448,6 +462,7 @@ def main():
 
     
     while active:
+       
         current_level = level_list[current_level_now]
         
         active_sprite_list = pygame.sprite.Group()
@@ -465,7 +480,6 @@ def main():
         for event in event_list:
             
             if event.type == pygame.QUIT:
-                print("A")
                 active = False
                 Quit = False
             if event.type == pygame.KEYDOWN:
@@ -500,9 +514,10 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
+        SLIME_obj.animate()
 
         
-        if SLIME_obj.rect.x >= 2*screen_width/3:
+        if SLIME_obj.rect.x >= 2*screen_width/4:
             if SLIME_obj.rect.x != ancien:
                 for plat in current_level.platform_list:
                     if SLIME_obj.change_x > 0:
@@ -514,7 +529,7 @@ def main():
                     if SLIME_obj.change_x > 0:
                         ennemie.rect.x -= SLIME_obj.change_x
         if moved==1:
-            if SLIME_obj.rect.x <= screen_width/3:
+            if SLIME_obj.rect.x <= 2*screen_width/4:
                 if SLIME_obj.rect.x != ancien:
                     for plat in current_level.platform_list:
                         if SLIME_obj.change_x < 0:
@@ -525,18 +540,15 @@ def main():
                     for ennemie in current_level.enemy_list:
                         if SLIME_obj.change_x < 0:
                             ennemie.rect.x -= SLIME_obj.change_x               
-        if SLIME_obj.rect.x >= screen_width/3:
+        if SLIME_obj.rect.x >= 2*screen_width/4:
             moved = 1
-        else:
-            moved = 0
+
         ancien=SLIME_obj.rect.x
 
         #On met à jour les objets du niveau
         current_level.update()
         active_sprite_list.update()
     
-    
-                    
         #Si le joueur va trop à droite,
         #il ne peut plus avancer plus à droite mais l'écran bouge à la même vitesse
         #pour simuler une caméra qui suit le joueur
@@ -552,8 +564,6 @@ def main():
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
         for Collision in collision_sprite:
-            
-            
             active = False
         
             
@@ -575,13 +585,15 @@ def main():
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.Door, False)
         
         for Collision in collision_sprite:
-            
-            if current_level_now < len(level_list)-1:
+            if current_level_now <= len(level_list)-1:
+                print(level_list)
                 current_level_now += 1
                 SLIME_obj.rect.x = coordone_SLIME_obj[0]
                 SLIME_obj.rect.y = coordone_SLIME_obj[1]
             else:
+                
                 active=False
+        clock.tick(60)
     #fin du code et sortie de la fenêtre
     if Quit:
         print("quit")
@@ -599,7 +611,7 @@ def Pub():
     Pub3 = 'GRAPHISME/Pub_Yphone.png'
     skip_image = 'GRAPHISME/Skip_Ad.png'
     
-    
+    coordone_skip = (1300, 800)
     
     random_int = random.randint(1,3)
     if random_int == 1:
@@ -607,7 +619,7 @@ def Pub():
         pub= pygame.transform.scale(pub, (1500,1000))
         
         skip = BUTTON(skip_image,)
-        coordone_skip = (1400, 800)
+        
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
     
@@ -616,7 +628,7 @@ def Pub():
         pub= pygame.transform.scale(pub, (1500,1000))
         
         skip = BUTTON(skip_image,)
-        coordone_skip = (1400, 800)
+        
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
        
@@ -625,7 +637,7 @@ def Pub():
         pub= pygame.transform.scale(pub, (1500,1000))
         
         skip = BUTTON(skip_image,)
-        coordone_skip = (1400, 800)
+        
         skip.x = coordone_skip[0]
         skip.y = coordone_skip[1]
     
@@ -670,9 +682,8 @@ def GameOver_Scene():
     NO = BUTTON(image_NO)
     NO.x = YES.x + 450
     NO.y = YES.y
-
     
-    BUTTONS = pygame.sprite.Group(YES, NO)
+    BUTTONS = pygame.sprite.Group(YES,NO)
     
     active = True
     while active:
@@ -680,26 +691,27 @@ def GameOver_Scene():
         Event = pygame.event.get()
         display_surface.blit(GameOver,(200,100))
         BUTTONS.draw(display_surface)
-
+        BUTTONS.update()
+        for event in Event : 
+            if event.type == pygame.QUIT :
+                active=False 
+                
         if YES.click(Event):
             active = False
             main()
+          
         #si on appuie sur 'No', on quitte le jeu    
         if NO.click(Event):
             active=False
             print("Quit")
-            
+        
         BUTTONS.update()
-        for event in Event : 
-    
-            if event.type == pygame.QUIT :
-                continuer=False 
         
     pygame.quit()
-    
-
+   
 
 teste1.mainmenu()
-main()
+if teste1.mainmenu()==1:
+    main()
 
 
