@@ -437,7 +437,7 @@ def main():
     
     # On crée tout les niveaux
     level_list = []
-    level_list.append( Level_1(SLIME_obj))
+    level_list.append(Level_1(SLIME_obj))
     level_list.append(Level_2(SLIME_obj))
     
     #On place le premier niveau en premier
@@ -462,7 +462,7 @@ def main():
 
     
     while active:
-       
+        print(current_level_now)
         current_level = level_list[current_level_now]
         
         active_sprite_list = pygame.sprite.Group()
@@ -585,14 +585,14 @@ def main():
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.Door, False)
         
         for Collision in collision_sprite:
-            if current_level_now <= len(level_list)-1:
+            if current_level_now < len(level_list)-1:
                 print(level_list)
                 current_level_now += 1
                 SLIME_obj.rect.x = coordone_SLIME_obj[0]
                 SLIME_obj.rect.y = coordone_SLIME_obj[1]
             else:
-                
-                active=False
+                if current_level_now == len(level_list):
+                    active=False
         clock.tick(60)
     #fin du code et sortie de la fenêtre
     if Quit:
@@ -710,8 +710,8 @@ def GameOver_Scene():
     pygame.quit()
    
 
-teste1.mainmenu()
-if teste1.mainmenu()==1:
+return1 = teste1.mainmenu()
+if return1==1:
     main()
 
 
