@@ -2,7 +2,7 @@ import pygame
 
 
 #dimension de la fenetre
-screen_width = 1440
+screen_width = 1425
 screen_height = 1000
 
 #classe du joueur, ses stats
@@ -26,13 +26,16 @@ class Player(pygame.sprite.Sprite):
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
+        self.in_movement_screen = screen_width
 
         self.rect = self.image.get_rect()
 
         # On définit le vecteur vitesse du joueur
         self.change_x = 0
         self.change_y = 0
+        self.speed = 6
 
+        limit = 400
         # Liste des sprites dans lesquels on peut rentrer dedans
         self.level = None
 
@@ -40,7 +43,8 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.calc_grav()
         self.rect.topleft = self.rect.x, self.rect.y
-        self.rect.x += self.change_x  # Pour bouger de droite à gauche
+
+        self.rect.x += self.change_x * self.speed  # Pour bouger de droite à gauche
 
 
         #Variable pour repérer les collisions avec pygame
@@ -74,10 +78,10 @@ class Player(pygame.sprite.Sprite):
             self.current_sprite += 0.2
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
-
-
-            self.image = self.sprites[int(self.current_sprite)]
-
+            if self.change_x <= 0:
+                self.image = self.sprites[int(self.current_sprite)]
+            else:
+                self.image = self.sprites_flip[int(self.current_sprite)]
     def animate(self):
         self.is_animating = True
 
@@ -98,10 +102,8 @@ class Player(pygame.sprite.Sprite):
             self.change_y = 0
             self.rect.y = screen_height +300
 
-#Fonction pour le saut du joueur
+    #Fonction pour le saut du joueur
     def jump(self):
-
-
         #On vérifie les collions aux alentours du joueur
         self.rect.y += 2
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
@@ -115,18 +117,16 @@ class Player(pygame.sprite.Sprite):
      #Flèche gauche
     def go_left(self):
         #Flèche gauche
-        self.change_x = -6
+        self.change_x = -1
 
     #Flèche droite
     def go_right(self):
 
-        self.change_x = 6
+        self.change_x = 1
 
     #si le joueur arrête d'appuyer sur une touche
     def stop(self):
-
         self.change_x = 0
-
 
 
 #classe pour les ennemies, ses stats
@@ -144,8 +144,9 @@ class Ennemie(pygame.sprite.Sprite):
         self.state = 0
         self.nombre_de_boucle = 0
 
-    def update(self):
+    def update(self,x_shift):
         self.rect.topleft = self.x, self.y
+        self.rect.x += x_shift
 
 #Classe du bouton clickable (valable pour plusieurs boutons)
 class BUTTON(pygame.sprite.Sprite):
@@ -165,7 +166,6 @@ class BUTTON(pygame.sprite.Sprite):
     def click(self, event_list):
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos,self.rect)
                 if self.rect.collidepoint(event.pos):
                     return True
     def update(self):
@@ -176,18 +176,22 @@ class BUTTON(pygame.sprite.Sprite):
 class Platform(pygame.sprite.Sprite):
 
 
-    def __init__(self, width, height,image):
+    def __init__(self, width, height,image,x,y):
         super().__init__()
 
         #image du block principale
 
 
         self.image = pygame.Surface([width, height])
-        #self.image = pygame.image.load(image)
         self.image = pygame.transform.scale(pygame.image.load(image), (width, height))
-        #self.image.fill(Vert)
 
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self,x_shift):
+        self.rect.topleft = self.rect.x, self.rect.y
+        self.rect.x += x_shift
 
 #classe pour les Portes de fin de niveau
 class Door(pygame.sprite.Sprite):
@@ -203,8 +207,9 @@ class Door(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.state = 0
 
-    def update(self):
+    def update(self,x_shift):
         self.rect.topleft = self.x, self.y
+        self.rect.x += x_shift
 
 
 class Level(object):
@@ -216,25 +221,23 @@ class Level(object):
         self.enemy_list = pygame.sprite.Group()
         self.Door = pygame.sprite.Group()
         self.player = player
-
+        x_shift = 0
         #Background
         self.background = None
-
     # On met à jour le niveau
     def update(self):
 
-        self.platform_list.update()
-        self.enemy_list.update()
-        self.Door.update()
+        self.platform_list.update(x_shift)
+        self.enemy_list.update(x_shift)
+        self.Door.updatex_shift()
     #Fonction pour ajouter le niveau à l'écran
     def draw(self):
-
-
 
         # On ajoute tout à l'écran
         self.platform_list.draw(Level.screen)
         self.enemy_list.draw(Level.screen)
         self.Door.draw(Level.screen)
+
 
 #On crée les plateformes du niveau
 
@@ -270,35 +273,24 @@ class Level_1(Level):
         [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
         size=75
-        height=0
+        y=0
 
         for line in level:
-            height+=size
-            print(height)
-            length=0
+            y+=size
+            x=0
             for object in line:
-                print(object)
                 if object == 1:
-                    print(length)
-                    block = Platform(size, size,cube1)
-                    block.rect.x = length
-                    block.rect.y = height
+                    block = Platform(size,size,cube1,x,y)
                     block.player = self.player
                     self.platform_list.add(block)
                 if object == 2:
                     door = 'GRAPHISME\\Fruit.png'
                     Door_obj = Door(door)
-                    Door_obj.x = length
-                    Door_obj.y = height
-                    self.Door.add(Door_obj)
-                if object == 2:
-                    door = 'GRAPHISME\\Fruit.png'
-                    Door_obj = Door(door)
-                    Door_obj.x = length
-                    Door_obj.y = height
+                    Door_obj.x = x
+                    Door_obj.y = y
                     self.Door.add(Door_obj)
 
-                length+=size
+                x+=size
 
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
 
@@ -311,13 +303,15 @@ class Level_1(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
+        self.x_worldshift = 0
 
 
     def update(self):
+        self.scroll()
         #on update tout les objets, niveaux et entités créées
-        self.platform_list.update()
-        self.enemy_list.update()
-        self.Door.update()
+        self.platform_list.update(self.x_worldshift)
+        self.enemy_list.update(self.x_worldshift)
+        self.Door.update(self.x_worldshift)
 
     def draw(self, screen):
         # On place tout les objets, niveaux et entités créées
@@ -325,6 +319,21 @@ class Level_1(Level):
         self.enemy_list.draw(screen)
         self.Door.draw(screen)
 
+
+    def scroll(self):
+        player_x = self.player.rect.centerx
+
+        if player_x > 3*screen_width/4 and self.player.change_x > 0:
+            self.x_worldshift = 6
+            self.player.speed = 0
+
+        elif player_x < 1*screen_width/4 and self.player.change_x < 0:
+            self.x_worldshift = -6
+            self.player.speed = 0
+
+        else:
+            self.x_worldshift = 0
+            self.player.speed=6
 
 class Level_2(Level):
     #On définit le niveau 2
@@ -355,29 +364,29 @@ class Level_2(Level):
         [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
         size=75
-        height=0
+        y=0
 
         for line in level:
-            height+=size
-            print(height)
-            length=0
+            y+=size
+
+            x=0
             for object in line:
-                print(object)
+
                 if object == 1:
-                    print(length)
-                    block = Platform(size, size,cube1)
-                    block.rect.x = length
-                    block.rect.y = height
+
+                    block = Platform(size, size,cube1,x,y)
+                    block.rect.x = x
+                    block.rect.y = y
                     block.player = self.player
                     self.platform_list.add(block)
                 if object == 2:
                     door = 'GRAPHISME\\Fruit.png'
                     Door_obj = Door(door)
-                    Door_obj.x = length
-                    Door_obj.y = height
+                    Door_obj.x = x
+                    Door_obj.y = y
                     self.Door.add(Door_obj)
 
-                length+=size
+                x+=size
 
         Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
 
