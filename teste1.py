@@ -138,4 +138,5 @@ def mainmenu():
                 continuer=False 
     
                 pygame.quit() 
-mainmenu()
+       return True
+
