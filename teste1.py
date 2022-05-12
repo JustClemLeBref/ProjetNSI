@@ -31,7 +31,7 @@ def mainmenu():
     
     white = (255, 255, 255) 
     
-    X = 1400
+    X = 1425
     Y = 1000
     
     display_surface = pygame.display.set_mode((X, Y )) 
@@ -138,5 +138,5 @@ def mainmenu():
                 continuer=False 
     
                 pygame.quit() 
-       return True
+    return True
 
