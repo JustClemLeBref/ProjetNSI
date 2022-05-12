@@ -6,7 +6,7 @@ import teste1
 from levels import *
 
 #dimension de la fenetre
-screen_width = 1440
+screen_width = 1425
 screen_height = 1000
 
 #on ajoute en plus
@@ -62,7 +62,7 @@ def main():
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
     
     
-
+    in_movement_screen=screen_width
     
     ancien=SLIME_obj.rect.x
     hearts=1 
@@ -75,7 +75,7 @@ def main():
 
     
     while active:
-        print(current_level_now)
+      
         current_level = level_list[current_level_now]
         
         active_sprite_list = pygame.sprite.Group()
@@ -97,7 +97,6 @@ def main():
                 Quit = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    print('You Pressed ECHAP Key!')
                     active = False
             #variables pour les touches du clavier qui interagissent avec le jeu, et leurs effets
             if event.type == pygame.KEYDOWN:
@@ -127,50 +126,13 @@ def main():
                 if event.key == pygame.K_RIGHT and SLIME_obj.change_x > 0:
                     
                     SLIME_obj.stop()
+                    
         SLIME_obj.animate()
 
-        
-        if SLIME_obj.rect.x >= 2*screen_width/4:
-            if SLIME_obj.rect.x != ancien:
-                for plat in current_level.platform_list:
-                    if SLIME_obj.change_x > 0:
-                        plat.rect.x -= SLIME_obj.change_x
-                for door in current_level.Door:
-                    if SLIME_obj.change_x > 0:
-                        door.x -= SLIME_obj.change_x
-                for ennemie in current_level.enemy_list:
-                    if SLIME_obj.change_x > 0:
-                        ennemie.rect.x -= SLIME_obj.change_x
-        if moved==1:
-            if SLIME_obj.rect.x <= 2*screen_width/4:
-                if SLIME_obj.rect.x != ancien:
-                    for plat in current_level.platform_list:
-                        if SLIME_obj.change_x < 0:
-                            plat.rect.x -= SLIME_obj.change_x
-                    for door in current_level.Door:
-                        if SLIME_obj.change_x < 0:
-                            door.x -= SLIME_obj.change_x
-                    for ennemie in current_level.enemy_list:
-                        if SLIME_obj.change_x < 0:
-                            ennemie.rect.x -= SLIME_obj.change_x               
-        if SLIME_obj.rect.x >= 2*screen_width/4:
-            moved = 1
-
-        ancien=SLIME_obj.rect.x
 
         #On met à jour les objets du niveau
         current_level.update()
         active_sprite_list.update()
-    
-        #Si le joueur va trop à droite,
-        #il ne peut plus avancer plus à droite mais l'écran bouge à la même vitesse
-        #pour simuler une caméra qui suit le joueur
-        if SLIME_obj.rect.right > screen_width:
-            SLIME_obj.rect.right = screen_width
- 
-        #Pareil mais pour la gauche
-        if SLIME_obj.rect.left < 0:
-            SLIME_obj.rect.left = 0
         
 
         #On cherche des collisions avec pygame
@@ -193,13 +155,11 @@ def main():
         pygame.display.flip()
         
         if SLIME_obj.rect.y >= screen_height:
-            print("dead")
             active = False
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.Door, False)
         
         for Collision in collision_sprite:
             if current_level_now < len(level_list)-1:
-                print(level_list)
                 current_level_now += 1
                 SLIME_obj.rect.x = coordone_SLIME_obj[0]
                 SLIME_obj.rect.y = coordone_SLIME_obj[1]
@@ -209,9 +169,9 @@ def main():
         clock.tick(60)
     #fin du code et sortie de la fenêtre
     if Quit:
-        print("quit")
         Pub()
         GameOver_Scene()
+        pygame.quit()
     else:
         pygame.quit()
     
@@ -264,11 +224,15 @@ def Pub():
         display_surface.blit(pub,(0,0))
         BUTTONS.draw(display_surface)
         
+        for event in Event : 
+            if event.type == pygame.QUIT :
+                active=False 
+                
         if skip.click(Event):
             active = False
             GameOver_Scene()
         BUTTONS.update()
-        
+    
 
 
 
@@ -304,7 +268,7 @@ def GameOver_Scene():
         Event = pygame.event.get()
         display_surface.blit(GameOver,(200,100))
         BUTTONS.draw(display_surface)
-        BUTTONS.update()
+        
         for event in Event : 
             if event.type == pygame.QUIT :
                 active=False 
@@ -316,7 +280,7 @@ def GameOver_Scene():
         #si on appuie sur 'No', on quitte le jeu    
         if NO.click(Event):
             active=False
-            print("Quit")
+         
         
         BUTTONS.update()
         
