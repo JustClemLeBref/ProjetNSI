@@ -254,23 +254,27 @@ class Level_1(Level):
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
-        cube1 = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
-        Spikes = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
-        cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
+        cube1 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube2 = 'GRAPHISME\\Cubes2\\Cubes5.png'
+        cube3 = 'GRAPHISME\\Cubes2\\Cubes12.png'
+        cube4 = 'GRAPHISME\\Cubes2\\Cubes13.png'
+        cube5 = 'GRAPHISME\\Cubes2\\Cubes14.png'
+        cube6 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube7 = 'GRAPHISME\\Cubes2\\Cubes8.png'
         # Array with width, height, x, and y of platform
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,9,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,3,4,4,4,4,4,5,0,3,4,4,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
         size=75
         y=0
@@ -284,11 +288,42 @@ class Level_1(Level):
                     block.player = self.player
                     self.platform_list.add(block)
                 if object == 2:
+                    block = Platform(size,size,cube2,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 3:
+                    block = Platform(size,size,cube3,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 4:
+                    block = Platform(size,size,cube4,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 5:
+                    block = Platform(size,size,cube5,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 6:
+                    block = Platform(size,size,cube6,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 7:
+                    block = Platform(size,size,cube7,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+
+
+
+
+
+
+                if object == 9:
                     door = 'GRAPHISME\\Fruit.png'
                     Door_obj = Door(door)
                     Door_obj.x = x
                     Door_obj.y = y
                     self.Door.add(Door_obj)
+
 
                 x+=size
 
