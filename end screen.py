@@ -108,8 +108,11 @@ def endmenu():
             scary_image=pygame.transform.scale(scary_image, (500,500))
             display_surface.blit(scary_image, (500, 500))
 
-            
-        
+        bother_bloobey_image = pygame.image.load('GRAPHISME/bloobey-logo.png')
+        bother_bloobey_image=pygame.transform.scale(bother_bloobey_image, (500,500))
+        display_surface.blit(bother_bloobey_image, (1000, 500))
+        bother_bloobey_image = pygame.transform.flip(bother_bloobey_image, True, False)
+        display_surface.blit(bother_bloobey_image, (0, 500))
         #paramètre du clickage end       
         if end.click(event_list):
             continuer=False
@@ -121,4 +124,3 @@ def endmenu():
                 continuer=False 
     
                 pygame.quit() 
-
