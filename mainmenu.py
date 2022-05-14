@@ -18,7 +18,7 @@ class BUTTON(pygame.sprite.Sprite):
     def click(self, event_list):
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos,self.rect)
+                
                 if self.rect.collidepoint(event.pos):
                     return True
     def update(self):
@@ -96,11 +96,19 @@ def mainmenu():
     Iinfo.y = coordone_Iinfo[1]
     Iinfo.endresult = 0
     
+    #def position et importation warning important
+    warning_image = '.\\main_screen_images\\High_quality.png'
+    Iwarning = BUTTON(warning_image,(100,100))
+    coordone_Iwarning=(0,900)
+    Iwarning.x = coordone_Iwarning[0]
+    Iwarning.y = coordone_Iwarning[1]
+    Iwarning.endresult = 0
+    
     quit=False
     
     
     
-    BUTTONS = pygame.sprite.Group(play,monster,bloobey,Tbloobey,Isetting,Iinfo)
+    BUTTONS = pygame.sprite.Group(play,monster,bloobey,Tbloobey,Isetting,Iinfo,Iwarning)
     Imenu=False
     menu= False
     continuer = True
@@ -142,4 +150,5 @@ def mainmenu():
                 pygame.quit()
     if not(quit):
         return True
+
 
