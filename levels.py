@@ -80,7 +80,7 @@ class Player(pygame.sprite.Sprite):
                 self.current_sprite = 0
             if self.change_x <= 0:
                 self.image = self.sprites[int(self.current_sprite)]
-            else:
+            if self.change_x >= 0:
                 self.image = self.sprites_flip[int(self.current_sprite)]
     def animate(self):
         self.is_animating = True
@@ -111,7 +111,7 @@ class Player(pygame.sprite.Sprite):
 
         # Si le saut est possible, le joueur saute
         if len(platform_hit_list) > 0 or self.rect.bottom >= screen_height:
-            self.change_y = -10
+            self.change_y = -12
 
     # Controles du saut:
      #Flèche gauche
@@ -131,21 +131,19 @@ class Player(pygame.sprite.Sprite):
 
 #classe pour les ennemies, ses stats
 class Ennemie(pygame.sprite.Sprite):
-    def __init__(self,image):
+    def __init__(self,image,x,y,size):
         super().__init__()
         self.description = "default"
-        self.size = (150,150)
+        self.size = size
         self.image = pygame.transform.scale(pygame.image.load(image), (self.size[0], self.size[1]))
         self.original = self.image
         self.original_flip = pygame.transform.flip(self.image, True, False)
-        self.x = 300
-        self.y = 640
         self.rect = self.image.get_rect()
-        self.state = 0
-        self.nombre_de_boucle = 0
+        self.rect.x = x
+        self.rect.y = y
 
     def update(self,x_shift):
-        self.rect.topleft = self.x, self.y
+        self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += x_shift
 
 #Classe du bouton clickable (valable pour plusieurs boutons)
@@ -195,7 +193,7 @@ class Platform(pygame.sprite.Sprite):
 
 #classe pour les Portes de fin de niveau
 class Door(pygame.sprite.Sprite):
-    def __init__(self,image):
+    def __init__(self,image,x,y):
         super().__init__()
         self.description = "default"
         self.size = (150,150)
@@ -204,10 +202,12 @@ class Door(pygame.sprite.Sprite):
         self.original_flip = pygame.transform.flip(self.image, True, False)
 
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
         self.state = 0
 
     def update(self,x_shift):
-        self.rect.topleft = self.x, self.y
+        self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += x_shift
 
 
@@ -271,7 +271,7 @@ class Level_1(Level):
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0,0,0,0,0],
-        [2,0,0,0,0,0,0,0,0,0,9,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,10,0,0,0,0,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,3,4,4,4,4,4,5,0,3,4,4,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
@@ -310,34 +310,16 @@ class Level_1(Level):
                     block = Platform(size,size,cube7,x,y)
                     block.player = self.player
                     self.platform_list.add(block)
-
-
-
-
-
-
                 if object == 9:
                     door = 'GRAPHISME\\Fruit.png'
-                    Door_obj = Door(door)
-                    Door_obj.x = x
-                    Door_obj.y = y
+                    Door_obj = Door(door,x,y)
                     self.Door.add(Door_obj)
-
+                if object == 10:
+                    spikes='GRAPHISME\\Spikes.png'
+                    monstre = Ennemie(spikes,x,y,(size,size))
+                    self.enemy_list.add(monstre)
 
                 x+=size
-
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
-
-
-        #On place les ennemis
-        for ennemie in Monsters:
-            monstre = Ennemie(ennemie[0])
-            monstre.size = ennemie[1]
-            coordone_monstre = ennemie[2]
-            monstre.x = coordone_monstre[0]
-            monstre.y = coordone_monstre[1]
-            self.enemy_list.add(monstre)
-
 
         self.x_worldshift = 0
 
@@ -451,35 +433,17 @@ class Level_2(Level):
                     block = Platform(size,size,cube9,x,y)
                     block.player = self.player
                     self.platform_list.add(block)
-
-
-
-
-
-
                 if object == 10:
                     door = 'GRAPHISME\\Fruit.png'
-                    Door_obj = Door(door)
-                    Door_obj.x = x
-                    Door_obj.y = y
+                    Door_obj = Door(door,x,y)
                     self.Door.add(Door_obj)
+                if object == 11:
+                    spikes='GRAPHISME\\Spikes.png'
+                    monstre = Ennemie(spikes,x,y,(size,size))
+                    self.enemy_list.add(monstre)
 
 
                 x+=size
-
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
-
-
-        #On place les ennemis
-        for ennemie in Monsters:
-            monstre = Ennemie(ennemie[0])
-            monstre.size = ennemie[1]
-            coordone_monstre = ennemie[2]
-            monstre.x = coordone_monstre[0]
-            monstre.y = coordone_monstre[1]
-            self.enemy_list.add(monstre)
-
-
         self.x_worldshift = 0
 
 
@@ -598,33 +562,17 @@ class Level_3(Level):
                     block.player = self.player
                     self.platform_list.add(block)
 
-
-
-
-
-
-
                 if object == 11:
                     door = 'GRAPHISME\\Fruit.png'
-                    Door_obj = Door(door)
-                    Door_obj.x = x
-                    Door_obj.y = y
+                    Door_obj = Door(door,x,y)
                     self.Door.add(Door_obj)
 
+                if object == 10:
+                    spikes='GRAPHISME\\Spikes.png'
+                    monstre = Ennemie(spikes,x,y,(size,size))
+                    self.enemy_list.add(monstre)
 
                 x+=size
-
-        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
-
-
-        #On place les ennemis
-        for ennemie in Monsters:
-            monstre = Ennemie(ennemie[0])
-            monstre.size = ennemie[1]
-            coordone_monstre = ennemie[2]
-            monstre.x = coordone_monstre[0]
-            monstre.y = coordone_monstre[1]
-            self.enemy_list.add(monstre)
 
 
         self.x_worldshift = 0
