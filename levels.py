@@ -202,8 +202,7 @@ class Door(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load(image), (self.size[0], self.size[1]))
         self.original = self.image
         self.original_flip = pygame.transform.flip(self.image, True, False)
-        self.x = 300
-        self.y = 640
+
         self.rect = self.image.get_rect()
         self.state = 0
 
@@ -229,7 +228,7 @@ class Level(object):
 
         self.platform_list.update(x_shift)
         self.enemy_list.update(x_shift)
-        self.Door.updatex_shift()
+        self.Door.update(x_shift)
     #Fonction pour ajouter le niveau à l'écran
     def draw(self):
 
@@ -270,9 +269,9 @@ class Level_1(Level):
         [6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,9,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0,0,0,0,0],
-        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,9,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0],
         [2,3,4,4,4,4,4,5,0,3,4,4,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
@@ -338,6 +337,8 @@ class Level_1(Level):
             monstre.x = coordone_monstre[0]
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
+
+
         self.x_worldshift = 0
 
 
@@ -355,7 +356,7 @@ class Level_1(Level):
         self.Door.draw(screen)
 
 
-        def scroll(self):
+    def scroll(self):
         player_x = self.player.rect.centerx
 
         if player_x < screen_width / 4 and self.player.change_x < 0:
@@ -374,6 +375,8 @@ class Level_2(Level):
     #On définit le niveau 2
 
     def __init__(self,player):
+        #Niveau 2
+
 
         Level.__init__(self, player)
 
@@ -381,45 +384,86 @@ class Level_2(Level):
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
-        cube1 = 'GRAPHISME\\Cubes2\\SCubeShortD4.png'
-        cube2 = 'GRAPHISME\\Cubes2\\SCubeLongD1.png'
+        cube1 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube2 = 'GRAPHISME\\Cubes2\\Cubes5.png'
+        cube3 = 'GRAPHISME\\Cubes2\\Cubes12.png'
+        cube4 = 'GRAPHISME\\Cubes2\\Cubes13.png'
+        cube5 = 'GRAPHISME\\Cubes2\\Cubes14.png'
+        cube6 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube7 = 'GRAPHISME\\Cubes2\\Cubes8.png'
+        cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
+        cube9 = 'GRAPHISME\\Cubes2\\Cubes11.png'
         # Array with width, height, x, and y of platform
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,4,4,5,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [7,3,4,4,4,4,4,4,4,5,0,0,3,4,5,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
         size=75
         y=0
 
         for line in level:
             y+=size
-
             x=0
             for object in line:
-
                 if object == 1:
-
-                    block = Platform(size, size,cube1,x,y)
-                    block.rect.x = x
-                    block.rect.y = y
+                    block = Platform(size,size,cube1,x,y)
                     block.player = self.player
                     self.platform_list.add(block)
                 if object == 2:
+                    block = Platform(size,size,cube2,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 3:
+                    block = Platform(size,size,cube3,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 4:
+                    block = Platform(size,size,cube4,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 5:
+                    block = Platform(size,size,cube5,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 6:
+                    block = Platform(size,size,cube6,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 7:
+                    block = Platform(size,size,cube7,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 8:
+                    block = Platform(size,size,cube8,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 9:
+                    block = Platform(size,size,cube9,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+
+
+
+
+
+
+                if object == 10:
                     door = 'GRAPHISME\\Fruit.png'
                     Door_obj = Door(door)
                     Door_obj.x = x
                     Door_obj.y = y
                     self.Door.add(Door_obj)
+
 
                 x+=size
 
@@ -435,14 +479,182 @@ class Level_2(Level):
             monstre.y = coordone_monstre[1]
             self.enemy_list.add(monstre)
 
+
+        self.x_worldshift = 0
+
+
     def update(self):
-        #On met à jour tout les objets, niveaux et entités créées
-        self.platform_list.update()
-        self.enemy_list.update()
-        self.Door.update()
+        self.scroll()
+        #on update tout les objets, niveaux et entités créées
+        self.platform_list.update(self.x_worldshift)
+        self.enemy_list.update(self.x_worldshift)
+        self.Door.update(self.x_worldshift)
 
     def draw(self, screen):
-        # cette fonction 'dessine' ou place tout les objets, niveaux et entités créées
+        # On place tout les objets, niveaux et entités créées
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
         self.Door.draw(screen)
+
+
+    def scroll(self):
+        player_x = self.player.rect.centerx
+
+        if player_x < screen_width / 4 and self.player.change_x < 0:
+            self.x_worldshift = 6
+            self.player.speed = 0
+
+        elif player_x >  screen_width - screen_width / 4 and self.player.change_x > 0:
+            self.x_worldshift = -6
+            self.player.speed = 0
+
+        else:
+            self.x_worldshift = 0
+            self.player.speed=6
+
+class Level_3(Level):
+    #On définit le niveau 3
+
+    def __init__(self,player):
+        #Niveau 3
+
+
+        Level.__init__(self, player)
+
+        # Call the parent constructor
+        Level.__init__(self, player)
+        player=player
+        self.platform_list = pygame.sprite.Group()
+        cube1 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube2 = 'GRAPHISME\\Cubes2\\Cubes5.png'
+        cube3 = 'GRAPHISME\\Cubes2\\Cubes12.png'
+        cube4 = 'GRAPHISME\\Cubes2\\Cubes13.png'
+        cube5 = 'GRAPHISME\\Cubes2\\Cubes14.png'
+        cube6 = 'GRAPHISME\\Cubes2\\Cubes2.png'
+        cube7 = 'GRAPHISME\\Cubes2\\Cubes8.png'
+        cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
+        cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
+        cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
+        # Array with width, height, x, and y of platform
+        level=[
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,0,0,8,0,9,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,0,0,8,0,9,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,0,0,0,0,0,8,0,9,0,9,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [7,3,4,4,5,0,9,0,10,0,10,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+        size=75
+        y=0
+
+        for line in level:
+            y+=size
+            x=0
+            for object in line:
+                if object == 1:
+                    block = Platform(size,size,cube1,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 2:
+                    block = Platform(size,size,cube2,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 3:
+                    block = Platform(size,size,cube3,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 4:
+                    block = Platform(size,size,cube4,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 5:
+                    block = Platform(size,size,cube5,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 6:
+                    block = Platform(size,size,cube6,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 7:
+                    block = Platform(size,size,cube7,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 8:
+                    block = Platform(size,size,cube8,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 9:
+                    block = Platform(size,size,cube9,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+                if object == 10:
+                    block = Platform(size,size,cube10,x,y)
+                    block.player = self.player
+                    self.platform_list.add(block)
+
+
+
+
+
+
+
+                if object == 11:
+                    door = 'GRAPHISME\\Fruit.png'
+                    Door_obj = Door(door)
+                    Door_obj.x = x
+                    Door_obj.y = y
+                    self.Door.add(Door_obj)
+
+
+                x+=size
+
+        Monsters = [['GRAPHISME/monstre_test.png', (150,150), (0,400)],]
+
+
+        #On place les ennemis
+        for ennemie in Monsters:
+            monstre = Ennemie(ennemie[0])
+            monstre.size = ennemie[1]
+            coordone_monstre = ennemie[2]
+            monstre.x = coordone_monstre[0]
+            monstre.y = coordone_monstre[1]
+            self.enemy_list.add(monstre)
+
+
+        self.x_worldshift = 0
+
+
+    def update(self):
+        self.scroll()
+        #on update tout les objets, niveaux et entités créées
+        self.platform_list.update(self.x_worldshift)
+        self.enemy_list.update(self.x_worldshift)
+        self.Door.update(self.x_worldshift)
+
+    def draw(self, screen):
+        # On place tout les objets, niveaux et entités créées
+        self.platform_list.draw(screen)
+        self.enemy_list.draw(screen)
+        self.Door.draw(screen)
+
+
+    def scroll(self):
+        player_x = self.player.rect.centerx
+
+        if player_x < screen_width / 4 and self.player.change_x < 0:
+            self.x_worldshift = 6
+            self.player.speed = 0
+
+        elif player_x >  screen_width - screen_width / 4 and self.player.change_x > 0:
+            self.x_worldshift = -6
+            self.player.speed = 0
+
+        else:
+            self.x_worldshift = 0
+            self.player.speed=6
