@@ -123,7 +123,7 @@ def mainmenu():
         if Iinfo.click(event_list):
             Imenu=not(Imenu)
         if Imenu:
-            Imenu_image = pygame.image.load('.\\main_screen_images\\image_info.png')
+            Imenu_image = pygame.image.load('.\\main_screen_images\\image_infos.png')
             display_surface.blit(Imenu_image, (175, 250))
     
         
