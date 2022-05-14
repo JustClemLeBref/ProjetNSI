@@ -36,7 +36,9 @@ def mainmenu():
     
     display_surface = pygame.display.set_mode((X, Y )) 
     
-    pygame.display.set_caption('Image')   
+    pygame.display.set_caption('Main Menu')   
+    icon = pygame.image.load('GRAPHISME/bloobey-logo.png')
+    pygame.display.set_icon(icon)
     image =  pygame.image.load('.\\main_screen_images\\Background_Sized.png') 
     
     #def de la musique
@@ -94,7 +96,7 @@ def mainmenu():
     Iinfo.y = coordone_Iinfo[1]
     Iinfo.endresult = 0
     
-    
+    quit=False
     
     
     
@@ -135,8 +137,9 @@ def mainmenu():
         for event in event_list : 
     
             if event.type == pygame.QUIT :
-                continuer=False 
-    
-                pygame.quit() 
-    return True
+                continuer=False
+                quit = True
+                pygame.quit()
+    if not(quit):
+        return True
 
