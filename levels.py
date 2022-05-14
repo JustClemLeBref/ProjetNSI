@@ -95,7 +95,7 @@ class Player(pygame.sprite.Sprite):
         if self.change_y == 0:
             self.change_y = 1
         else:
-            self.change_y += .5
+            self.change_y += .7
 
         #Condition pour voir si le joueur se situe au sol ou non
         if self.rect.y >= screen_height +300 and self.change_y >= 0:
@@ -111,7 +111,7 @@ class Player(pygame.sprite.Sprite):
 
         # Si le saut est possible, le joueur saute
         if len(platform_hit_list) > 0 or self.rect.bottom >= screen_height:
-            self.change_y = -12
+            self.change_y = -15
 
     # Controles du saut:
      #Flèche gauche
