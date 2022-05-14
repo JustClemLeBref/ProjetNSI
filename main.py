@@ -4,6 +4,7 @@ from pygame import mixer
 import random
 import teste1
 from levels import *
+from end_screen import *
 
 #dimension de la fenetre
 screen_width = 1425
@@ -15,11 +16,6 @@ clock = pygame.time.Clock()
 Vert = (255, 255, 255)
 rouge = (255, 0, 0)
 noir = (0, 0, 0)
-
-
-
-
-
 
 def main():
     
@@ -52,6 +48,8 @@ def main():
     level_list = []
     level_list.append(Level_1(SLIME_obj))
     level_list.append(Level_2(SLIME_obj))
+    level_list.append(Level_3(SLIME_obj))
+
     
     #On place le premier niveau en premier
     current_level_now = 0
@@ -70,6 +68,7 @@ def main():
     #Variables pour gérer la vitesse de msie à jour de l'écran
     clock = pygame.time.Clock()
     Quit = True
+    End= False
     active = True
     moved = 0
 
@@ -98,6 +97,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     active = False
+                    Quit = False
             #variables pour les touches du clavier qui interagissent avec le jeu, et leurs effets
             if event.type == pygame.KEYDOWN:
                  
@@ -160,12 +160,15 @@ def main():
         
         for Collision in collision_sprite:
             if current_level_now < len(level_list)-1:
+                print(current_level_now)
                 current_level_now += 1
                 SLIME_obj.rect.x = coordone_SLIME_obj[0]
                 SLIME_obj.rect.y = coordone_SLIME_obj[1]
             else:
-                if current_level_now == len(level_list):
-                    active=False
+                active=False
+                Quit=False
+                End = True
+                
         clock.tick(60)
     #fin du code et sortie de la fenêtre
     if Quit:
@@ -173,6 +176,8 @@ def main():
         GameOver_Scene()
         pygame.quit()
     else:
+        if End:
+            endmenu()
         pygame.quit()
     
 def Pub():
@@ -230,7 +235,6 @@ def Pub():
                 
         if skip.click(Event):
             active = False
-            GameOver_Scene()
         BUTTONS.update()
     
 
