@@ -49,6 +49,8 @@ def main():
     level_list.append(Level_1(SLIME_obj))
     level_list.append(Level_2(SLIME_obj))
     level_list.append(Level_3(SLIME_obj))
+    level_list.append(Level_4(SLIME_obj))
+    level_list.append(Level_5(SLIME_obj))
 
     
     #On place le premier niveau en premier
