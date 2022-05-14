@@ -139,9 +139,9 @@ def main():
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
         for Collision in collision_sprite:
+
             active = False
         
-            
         screen.blit(background,(0,0))
         active_sprite_list.draw(screen)
         current_level.draw(screen)
