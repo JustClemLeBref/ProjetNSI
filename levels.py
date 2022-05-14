@@ -355,14 +355,14 @@ class Level_1(Level):
         self.Door.draw(screen)
 
 
-    def scroll(self):
+        def scroll(self):
         player_x = self.player.rect.centerx
 
-        if player_x > 3*screen_width/4 and self.player.change_x > 0:
+        if player_x < screen_width / 4 and self.player.change_x < 0:
             self.x_worldshift = 6
             self.player.speed = 0
 
-        elif player_x < 1*screen_width/4 and self.player.change_x < 0:
+        elif player_x >  screen_width - screen_width / 4 and self.player.change_x > 0:
             self.x_worldshift = -6
             self.player.speed = 0
 
