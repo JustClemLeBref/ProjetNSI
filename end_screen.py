@@ -18,7 +18,7 @@ class BUTTON2(pygame.sprite.Sprite):
     def click(self, event_list):
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos,self.rect)
+                
                 if self.rect.collidepoint(event.pos):
                     return True
     def update(self):
@@ -108,11 +108,15 @@ def endmenu():
             scary_image=pygame.transform.scale(scary_image, (500,500))
             display_surface.blit(scary_image, (500, 500))
 
-        bother_bloobey_image = pygame.image.load('GRAPHISME/bloobey-logo.png')
-        bother_bloobey_image=pygame.transform.scale(bother_bloobey_image, (500,500))
-        display_surface.blit(bother_bloobey_image, (1000, 500))
-        bother_bloobey_image = pygame.transform.flip(bother_bloobey_image, True, False)
-        display_surface.blit(bother_bloobey_image, (0, 500))
+        father_bloobey_image = pygame.image.load('.\\end_screen_images\\Bloobey_father.png')
+        father_bloobey_image=pygame.transform.scale(father_bloobey_image, (500,500))
+        display_surface.blit(father_bloobey_image, (1000, 500))
+        
+        mother_bloobey_image = pygame.image.load('.\\end_screen_images\\Bloobey_mother.png')
+        mother_bloobey_image=pygame.transform.scale(mother_bloobey_image, (500,500))
+        mother_bloobey_image = pygame.transform.flip(mother_bloobey_image, True, False)
+        display_surface.blit(mother_bloobey_image, (0, 500))
+        
         #paramètre du clickage end       
         if end.click(event_list):
             continuer=False
@@ -124,3 +128,4 @@ def endmenu():
                 continuer=False 
     
                 pygame.quit() 
+
