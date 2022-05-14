@@ -1,9 +1,8 @@
 import pygame
-
 import random
 from pygame import mixer
 
-class BUTTON(pygame.sprite.Sprite):
+class BUTTON2(pygame.sprite.Sprite):
     def __init__(self,image,size):
         super().__init__()
         self.description = "default"
@@ -48,7 +47,7 @@ def endmenu():
     
     #def position et importation bouton end
     image_end = '.\\end_screen_images\\the_end.png'
-    end = BUTTON(image_end,(350,250))
+    end = BUTTON2(image_end,(350,250))
     coordone_end=(515,575)
     end.x = coordone_end[0]
     end.y = coordone_end[1]
@@ -57,7 +56,7 @@ def endmenu():
     
     #def position et importation star
     image_star = '.\\end_screen_images\\star.png'
-    star = BUTTON(image_star,(10,10))
+    star = BUTTON2(image_star,(10,10))
     coordone_star=(150,125)
     star.x = coordone_star[0]
     star.y = coordone_star[1]
@@ -65,7 +64,7 @@ def endmenu():
     
     #def position et importation star2
     image_star2 = '.\\end_screen_images\\star2.png'
-    star2 = BUTTON(image_star2,(10,10))
+    star2 = BUTTON2(image_star2,(10,10))
     coordone_star2=(1150,105)
     star2.x = coordone_star2[0]
     star2.y = coordone_star2[1]
@@ -74,7 +73,7 @@ def endmenu():
     
     #def position et importation  titre end
     image_Tend = '.\\end_screen_images\\Thanks_for_Playing-removebg-preview.png'
-    Tend = BUTTON(image_Tend,(500,500))
+    Tend = BUTTON2(image_Tend,(500,500))
     coordone_Tend=(440,50)
     Tend.x = coordone_Tend[0]
     Tend.y = coordone_Tend[1]
@@ -122,4 +121,4 @@ def endmenu():
                 continuer=False 
     
                 pygame.quit() 
-endmenu()
+
