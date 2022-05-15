@@ -120,8 +120,8 @@ croix pour fermer
                     
 ### Bibliographie :
 Musique :
-- Fort Boyard Main theme 
-- Cause you are the reason why I'm still hanging on -- Kina (https://www.youtube.com/watch?v=E1VPwphps0o)
+- Fort Boyard Main theme = https://youtu.be/csO5xeM20F4
+- Cause you are the reason why I'm still hanging on -- Kina  = (https://www.youtube.com/watch?v=E1VPwphps0o)
 
 logiciels utilisés : 
 - Pyzo
