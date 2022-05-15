@@ -1,5 +1,7 @@
+#importation de la bibliiothèque pygame
 import pygame
-
+#code important du jeu qui définit tout ce qui est en rapport avec les niveaux
+#comme le joueur, les ennemis, les plateformes, les collisions, les entités, et les niveaux
 
 #dimension de la fenetre
 screen_width = 1425
@@ -14,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.sprites_flip = []
         self.is_animating = False
 
+        #boucle pour les animations, on cherche toutes les images de bloobey
         for i in range(1,9):
             image="GRAPHISME\\Bloobey-anim\\idle\\BLOOBEY-logo(idle){}.png".format(i)
             image=pygame.image.load(image)
@@ -22,7 +25,8 @@ class Player(pygame.sprite.Sprite):
             self.original_flip = pygame.transform.flip(self.image, True, False)
             self.sprites.append(self.original)
             self.sprites_flip.append(self.original_flip)
-
+        
+        #on commence avec la première image
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
@@ -65,7 +69,7 @@ class Player(pygame.sprite.Sprite):
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
 
-            # Reset our position based on the top/bottom of the object.
+            # reset la position du joueur après une collision (pour ne pas rentrer dans le bloc)
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
             elif self.change_y < 0:
@@ -85,7 +89,7 @@ class Player(pygame.sprite.Sprite):
     def animate(self):
         self.is_animating = True
 
-    #Fonction pour calculer la gravité appliqué au joueur ou au monstre
+    #Fonction pour calculer la gravité appliqué au joueur
     def calc_grav(self):
 
         #dimension de la fenetre
@@ -129,7 +133,7 @@ class Player(pygame.sprite.Sprite):
         self.change_x = 0
 
 
-#classe pour les ennemies, ses stats
+#classe pour les ennemies, les pics
 class Ennemie(pygame.sprite.Sprite):
     def __init__(self,image,x,y,size):
         super().__init__()
@@ -141,7 +145,8 @@ class Ennemie(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
+    
+    #on update les pics après chaque action
     def update(self,x_shift):
         self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += x_shift
@@ -182,7 +187,7 @@ class Platform(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([width, height])
         self.image = pygame.transform.scale(pygame.image.load(image), (width, height))
-
+        #coordonnées de la plateforme
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -191,7 +196,7 @@ class Platform(pygame.sprite.Sprite):
         self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += x_shift
 
-#classe pour les Portes de fin de niveau
+#classe pour les fruits portails de fin de niveau
 class Door(pygame.sprite.Sprite):
     def __init__(self,image,x,y):
         super().__init__()
@@ -211,7 +216,7 @@ class Door(pygame.sprite.Sprite):
         self.rect.x += x_shift
 
 
-
+#classe des niveaux en général
 class Level(object):
 
 
@@ -240,9 +245,9 @@ class Level(object):
 
 
 #On crée les plateformes du niveau
-
+#classe pour le premier niveau, et tout de même pour ceux qui suivent
 class Level_1(Level):
-    #Niveau 1
+   
 
     def __init__(self,player):
         #Niveau 1
@@ -250,7 +255,7 @@ class Level_1(Level):
 
         Level.__init__(self, player)
 
-        # Call the parent constructor
+        # on définit tout les blocs dont on aura besoin
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
@@ -264,7 +269,7 @@ class Level_1(Level):
         cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
         cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
         cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
-        # Array with width, height, x, and y of platform
+        # liste de liste représentant les coordonnées des blocs, des fruits et des pics
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -281,7 +286,7 @@ class Level_1(Level):
         ]
         size=75
         y=0
-
+        #pour chaque numéro on ajoute le bloc en question dans le niveau avec ses coordonnées
         for line in level:
             y+=size
             x=0
@@ -357,7 +362,9 @@ class Level_1(Level):
 
     def startover(self):
         self.x_worldshift = self.total
-
+    
+    #fonction du scolling, c'est-à-dire l'effet caméra centrer sur le joueur.
+    #si le joueur atteint une certaine abcisse x, sa vitesse vaut 0 et les plateformes bougent avec la même vitesse dans le côté opposé, qui donne un effet caméra.
     def scroll(self):
         player_x = self.player.rect.centerx
         if player_x < screen_width / 4 and self.player.change_x < 0:
@@ -371,7 +378,7 @@ class Level_1(Level):
             self.x_worldshift = 0
             self.player.speed=6
 
-
+# pareille que la classe Level_1
 class Level_2(Level):
     #On définit le niveau 2
 
@@ -381,7 +388,7 @@ class Level_2(Level):
 
         Level.__init__(self, player)
 
-        # Call the parent constructor
+        # 
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
@@ -395,7 +402,7 @@ class Level_2(Level):
         cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
         cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
         cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
-        # Array with width, height, x, and y of platform
+        #liste de liste représentant les coordonnées des blocs, des fruits et des pics
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -503,7 +510,9 @@ class Level_2(Level):
         else:
             self.x_worldshift = 0
             self.player.speed=6
-
+            
+            
+# pareille que la classe Level_1
 class Level_3(Level):
     #On définit le niveau 3
 
@@ -513,7 +522,7 @@ class Level_3(Level):
 
         Level.__init__(self, player)
 
-        # Call the parent constructor
+        
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
@@ -527,7 +536,7 @@ class Level_3(Level):
         cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
         cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
         cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
-        # Array with width, height, x, and y of platform
+        # liste de liste représentant les coordonnées des blocs, des fruits et des pics
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -639,6 +648,8 @@ class Level_3(Level):
             self.x_worldshift = 0
             self.player.speed=6
 
+
+# pareille que la classe Level_1
 class Level_4(Level):
     #On définit le niveau 4
 
@@ -648,7 +659,7 @@ class Level_4(Level):
 
         Level.__init__(self, player)
 
-        # Call the parent constructor
+       
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
@@ -662,7 +673,7 @@ class Level_4(Level):
         cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
         cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
         cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
-        # Array with width, height, x, and y of platform
+        # liste de liste représentant les coordonnées des blocs, des fruits et des pics
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -774,7 +785,7 @@ class Level_4(Level):
             self.x_worldshift = 0
             self.player.speed=6
 
-
+# pareille que la classe Level_1
 class Level_5(Level):
     #On définit le niveau 5
 
@@ -784,7 +795,7 @@ class Level_5(Level):
 
         Level.__init__(self, player)
 
-        # Call the parent constructor
+        
         Level.__init__(self, player)
         player=player
         self.platform_list = pygame.sprite.Group()
@@ -798,7 +809,7 @@ class Level_5(Level):
         cube8 = 'GRAPHISME\\Cubes2\\Cubes9.png'
         cube9 = 'GRAPHISME\\Cubes2\\Cubes10.png'
         cube10 = 'GRAPHISME\\Cubes2\\Cubes11.png'
-        # Array with width, height, x, and y of platform
+        #liste de liste représentant les coordonnées des blocs, des fruits et des pics
         level=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
