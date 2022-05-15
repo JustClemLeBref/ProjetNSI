@@ -1,7 +1,10 @@
+#partie de l'écran de fin de jeu
+#importation des bibliothèques nécessaires
 import pygame
 import random
 from pygame import mixer
 
+#classe d'un autre bouton, le même que le précédent, mais cette fois appelé BUTTON2
 class BUTTON2(pygame.sprite.Sprite):
     def __init__(self,image,size):
         super().__init__()
@@ -24,7 +27,7 @@ class BUTTON2(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
 
-
+#fonction principale de l'écran de fin de jeu
 def endmenu():
     pygame.init() 
     
@@ -79,7 +82,7 @@ def endmenu():
     Tend.y = coordone_Tend[1]
     Tend.endresult = 0
     
-    
+    #affichage de tout les boutons différents
     BUTTONS = pygame.sprite.Group(end,star,Tend,star2)
     heart= False
     scary= False
@@ -108,6 +111,8 @@ def endmenu():
             scary_image=pygame.transform.scale(scary_image, (500,500))
             display_surface.blit(scary_image, (500, 500))
 
+        
+        #affichage du père et de la mère de Bloobey, qui sont enfin réunis avec leur fils
         father_bloobey_image = pygame.image.load('.\\end_screen_images\\Bloobey_father.png')
         father_bloobey_image=pygame.transform.scale(father_bloobey_image, (500,500))
         display_surface.blit(father_bloobey_image, (1000, 500))
