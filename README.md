@@ -121,4 +121,19 @@ croix pour fermer
 ### Bibliographie :
 Musique :
 - Fort Boyard Main theme 
-- 
+- Cause you are the reason why I'm still hanging on -- Kina (https://www.youtube.com/watch?v=E1VPwphps0o)
+
+logiciels utilisés : 
+- Pyzo
+- Youtube
+- Aseprite
+- Tiled
+- Visual Studio Code
+
+Sites utilisés : 
+- Piskel = https://www.piskelapp.com/
+- Github = github.com
+- Google = google.com
+- removebg = remove.bg/fr
+- canva.com = https://www.canva.com/fr_fr/
+
