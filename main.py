@@ -1,4 +1,4 @@
-#importation des modules nécessaires
+#importation des modules nécessaires et des autres fichiers contenant le reste du code
 import pygame
 from pygame import mixer
 import random
@@ -10,7 +10,7 @@ from end_screen import *
 screen_width = 1425
 screen_height = 1000
 
-#on ajoute en plus
+
 clock = pygame.time.Clock()
 
 Vert = (255, 255, 255)
@@ -56,7 +56,7 @@ def main():
     #On place le premier niveau en premier
     current_level_now = 0
 
-    
+    #coordonnée du joueur au début
     coordone_SLIME_obj=(100,screen_height - 300)
     SLIME_obj.rect.x = coordone_SLIME_obj[0]
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
@@ -64,24 +64,26 @@ def main():
     
     ancien=SLIME_obj.rect.x
 
+    
+    #barre de vie de Bloobey, pour quan il a toute sa vie ou moins
     full_hearts = '.\\GRAPHISME\\LifeBarFULL.png'
     two_hearts ='.\\GRAPHISME\\LifeBar2.png'
     one_hearts = '.\\GRAPHISME\\LifeBar1.png'
     hearts_full = BUTTON(full_hearts)
-    hearts_full.image = pygame.transform.scale(pygame.image.load(full_hearts), (400,100))
+    hearts_full.image = pygame.transform.scale(pygame.image.load(full_hearts), (300,300))
     hearts_full.x = 0
     hearts_full.y = 0
     BUTTON_full=pygame.sprite.Group(hearts_full)
     
     hearts_2 = BUTTON(two_hearts)
-    hearts_2.image = pygame.transform.scale(pygame.image.load(two_hearts), (400,100))
+    hearts_2.image = pygame.transform.scale(pygame.image.load(two_hearts), (300,300))
     hearts_2.x = 0
     hearts_2.y = 0
     
     BUTTON_2_hearts = pygame.sprite.Group(hearts_2)
     
     hearts_1 = BUTTON(one_hearts)
-    hearts_1.image = pygame.transform.scale(pygame.image.load(one_hearts), (400,100))
+    hearts_1.image = pygame.transform.scale(pygame.image.load(one_hearts), (300,300))
     hearts_1.x = 0
     hearts_1.y = 0
     
@@ -104,13 +106,14 @@ def main():
         active_sprite_list.add(SLIME_obj)
         event_list = pygame.event.get()
         
-        
+        #inutilisé mais pas supprimé au cas où d'un éventuel bug
         """
         if SLIME_obj.rect.x != ancien:
             print(SLIME_obj.rect.x)
             print(SLIME_obj.rect.y)
         ancien=SLIME_obj.rect.x
         """
+        
         for event in event_list:
             
             if event.type == pygame.QUIT:
@@ -159,7 +162,7 @@ def main():
         
         #On cherche des collisions avec pygame
 
-        
+        #affichage de la barre de vie
         screen.blit(background,(0,0))
         active_sprite_list.draw(screen)
         current_level.draw(screen)
@@ -177,6 +180,7 @@ def main():
         
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
         
+        #reset du personnage et du niveau pour quand il perd une vie
         current_level.scroll()
         for Collision in collision_sprite:
             if hearts > 0:
@@ -225,7 +229,8 @@ def main():
         if End:
             endmenu()
         pygame.quit()
-    
+        
+ #fonction des pubs, qui s'affiche avant l'écran de game over, pour payer les développeurs
 def Pub():
     display_surface =  pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption('Pub')
@@ -285,7 +290,7 @@ def Pub():
     
 
 
-
+#fonction game over, demande si oui ou non on souhaite rejouer
 def GameOver_Scene():
     
     display_surface = pygame.display.set_mode((screen_width, screen_height))
@@ -311,7 +316,9 @@ def GameOver_Scene():
     NO.y = YES.y
     
     BUTTONS = pygame.sprite.Group(YES,NO)
-    
+   
+
+#boucle priincipal du jeu qui fait tourner la fenêtre et le jeu
     active = True
     while active:
         pygame.display.update() 
