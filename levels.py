@@ -154,8 +154,8 @@ class BUTTON(pygame.sprite.Sprite):
         self.size = (100,100)
         self.image = pygame.transform.scale(pygame.image.load(image), (self.size[0], self.size[1]))
         self.rect = self.image.get_rect()
-        self.x = 300
-        self.y = 640
+        self.rect.x = 300
+        self.rect.y = 640
 
         self.clicked = False
         self.endresult = 0
@@ -167,7 +167,7 @@ class BUTTON(pygame.sprite.Sprite):
                 if self.rect.collidepoint(event.pos):
                     return True
     def update(self):
-        self.rect.topleft = self.x, self.y
+        self.rect.topleft = self.rect.x, self.rect.y
 
 
  #Class de La Platforme où Bloobey saute
@@ -209,6 +209,7 @@ class Door(pygame.sprite.Sprite):
     def update(self,x_shift):
         self.rect.topleft = self.rect.x, self.rect.y
         self.rect.x += x_shift
+
 
 
 class Level(object):
