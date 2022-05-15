@@ -62,21 +62,41 @@ def main():
     SLIME_obj.rect.y = coordone_SLIME_obj[1]
     
     
-    in_movement_screen=screen_width
-    
     ancien=SLIME_obj.rect.x
-    hearts=1 
+
+    full_hearts = '.\\GRAPHISME\\LifeBarFULL.png'
+    two_hearts ='.\\GRAPHISME\\LifeBar2.png'
+    one_hearts = '.\\GRAPHISME\\LifeBar1.png'
+    hearts_full = BUTTON(full_hearts)
+    hearts_full.image = pygame.transform.scale(pygame.image.load(full_hearts), (400,100))
+    hearts_full.x = 0
+    hearts_full.y = 0
+    BUTTON_full=pygame.sprite.Group(hearts_full)
     
+    hearts_2 = BUTTON(two_hearts)
+    hearts_2.image = pygame.transform.scale(pygame.image.load(two_hearts), (400,100))
+    hearts_2.x = 0
+    hearts_2.y = 0
+    
+    BUTTON_2_hearts = pygame.sprite.Group(hearts_2)
+    
+    hearts_1 = BUTTON(one_hearts)
+    hearts_1.image = pygame.transform.scale(pygame.image.load(one_hearts), (400,100))
+    hearts_1.x = 0
+    hearts_1.y = 0
+    
+    BUTTON_1_hearts = pygame.sprite.Group(hearts_1)
+        
     #Variables pour gérer la vitesse de msie à jour de l'écran
     clock = pygame.time.Clock()
     Quit = True
     End= False
     active = True
-    moved = 0
-
+    hearts = 2
+    total=0
     
     while active:
-      
+        
         current_level = level_list[current_level_now]
         
         active_sprite_list = pygame.sprite.Group()
@@ -130,34 +150,58 @@ def main():
                     SLIME_obj.stop()
                     
         SLIME_obj.animate()
-
+        
 
         #On met à jour les objets du niveau
+        
         current_level.update()
         active_sprite_list.update()
         
-
         #On cherche des collisions avec pygame
-        collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
-        
-        for Collision in collision_sprite:
 
-            active = False
         
         screen.blit(background,(0,0))
         active_sprite_list.draw(screen)
         current_level.draw(screen)
         
-
-        #60 imgaes par seconde maximum
+        if hearts == 2:
+            BUTTON_full.draw(screen)
+        if hearts == 1:
+            BUTTON_2_hearts.draw(screen)
+        if hearts == 0:
+            BUTTON_1_hearts.draw(screen)
         
-        clock.tick(60)
         
         #On met à jour l'écran après chaque actions du jeu
         pygame.display.flip()
         
+        collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.enemy_list, False)
+        
+        current_level.scroll()
+        for Collision in collision_sprite:
+            if hearts > 0:
+                hearts -=1
+                current_level.startover()
+                SLIME_obj.rect.x = 100
+                SLIME_obj.rect.y = screen_height - 300
+            else:
+                active = False
+        
         if SLIME_obj.rect.y >= screen_height:
-            active = False
+            if hearts > 0:
+                hearts -=1
+                current_level.startover()
+                SLIME_obj.rect.x = 100
+                SLIME_obj.rect.y = screen_height - 300
+            else:
+                active = False
+        #60 imgaes par seconde maximum
+        current_level.update()
+        current_level.x_worldshift = 0
+        clock.tick(60)
+        
+
+        
         collision_sprite = pygame.sprite.spritecollide(SLIME_obj, current_level.Door, False)
         
         for Collision in collision_sprite:
@@ -245,7 +289,7 @@ def Pub():
 def GameOver_Scene():
     
     display_surface = pygame.display.set_mode((screen_width, screen_height))
-    
+    white = (0, 0, 0) 
     pygame.display.set_caption('GameOver_Scene')   
 
     #Image du GameOver
@@ -272,6 +316,7 @@ def GameOver_Scene():
     while active:
         pygame.display.update() 
         Event = pygame.event.get()
+        display_surface.fill(white) 
         display_surface.blit(GameOver,(200,100))
         BUTTONS.draw(display_surface)
         
@@ -294,5 +339,5 @@ def GameOver_Scene():
    
 
 return1 = mainmenu()
-if return1==1:
+if return1:
     main()
