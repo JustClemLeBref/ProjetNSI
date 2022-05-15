@@ -1,7 +1,11 @@
+#écran d'accueil
+#on importe les bibiothèques
 import pygame
 import random
-from pygame import mixer
+from pygame import mixer #pour la musique
 
+
+#on définit la classe bouton qui sert de bouton
 class BUTTON(pygame.sprite.Sprite):
     def __init__(self,image,size):
         super().__init__()
@@ -24,7 +28,7 @@ class BUTTON(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.x, self.y
 
-
+#fonction principale de l'écran d'acceuil
 def mainmenu():
     pygame.init() 
     
@@ -107,7 +111,7 @@ def mainmenu():
     quit=False
     
     
-    
+    #affichage de tout les boutons différents
     BUTTONS = pygame.sprite.Group(play,monster,bloobey,Tbloobey,Isetting,Iinfo,Iwarning)
     Imenu=False
     menu= False
@@ -137,7 +141,7 @@ def mainmenu():
         
         
         
-         #paramètre du clickage play       
+         #paramètre du clickage play ou de la croix rouge      
         if play.click(event_list):
             continuer=False
             pygame.quit() 
